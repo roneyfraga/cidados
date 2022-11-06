@@ -1,5 +1,5 @@
 
-# R {.unnumbered}
+# R _curso ciência de dados (ufmt/fe) {.unnumbered}
 
 - Material introdutório de programação em R (@aquino2014,  @grolemund2014, @peng2016)
 

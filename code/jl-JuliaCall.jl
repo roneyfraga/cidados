@@ -41,3 +41,6 @@ julia_library("Optim")
 ## help
 julia_help("sqrt")
 
+# Abrir Julia dentro do R
+# JuliaCall::julia_console()
+

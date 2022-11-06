@@ -30,6 +30,9 @@ book:
   chapters:
     - index.qmd
 
+    # - part: excel básico 
+    #   chapters:
+
     - part: r.qmd 
       chapters:
         - r-01.qmd
@@ -60,7 +63,7 @@ book:
         # processamento de linguagem natural
         # structutal topic modeling 
 
-    # - part: aprendizado de maqina
+    # - part: aprendizado de máquina
 
     - part: projetos.qmd
       chapters:
@@ -92,3 +95,5 @@ format:
     code-line-numbers: true
     author-meta: "Roney Fraga Souza"
 
+execute:
+  cache: true
