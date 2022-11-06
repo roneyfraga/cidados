@@ -4,6 +4,7 @@ _book/
 *_files
 quarto-ex-artigo/*_files
 quarto-ex-html/*_files/
+quarto-ex-html/*.html
 quarto-ex-revealjs/*_files/
 quarto-ex-revealjs/mini/
 .Rproj.user
