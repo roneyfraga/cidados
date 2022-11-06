@@ -127,5 +127,110 @@
   },
   "projeto-leitura-ris.qmd": {
     "projeto-leitura-ris.html": "cf53c9b3"
+  },
+  "r_01.qmd": {
+    "r_01.html": "01a6e48c"
+  },
+  "r_02.qmd": {
+    "r_02.html": "0cb99532"
+  },
+  "r_03.qmd": {
+    "r_03.html": "61fdaf5a"
+  },
+  "r_04.qmd": {
+    "r_04.html": "39d6affc"
+  },
+  "r_05.qmd": {
+    "r_05.html": "a969ecea"
+  },
+  "r_06.qmd": {
+    "r_06.html": "a31352b0"
+  },
+  "julia_introducao.qmd": {
+    "julia_introducao.html": "3d1fc07b"
+  },
+  "python_introducao.qmd": {
+    "python_introducao.html": "20db0931"
+  },
+  "python_pandas_numpy.qmd": {
+    "python_pandas_numpy.html": "c47560f1"
+  },
+  "projeto_um_bilhao.qmd": {
+    "projeto_um_bilhao.html": "08555e85"
+  },
+  "projeto_ojs_downloader.qmd": {
+    "projeto_ojs_downloader.html": "550cd889"
+  },
+  "projeto_wos_downloader.qmd": {
+    "projeto_wos_downloader.html": "7cbb2081"
+  },
+  "projeto_json_map.qmd": {
+    "projeto_json_map.html": "d36610ab"
+  },
+  "projeto_flexdashboard.qmd": {
+    "projeto_flexdashboard.html": "6f2ce9f2"
+  },
+  "projeto_dicionario_sinonimos.qmd": {
+    "projeto_dicionario_sinonimos.html": "a4c23f8d"
+  },
+  "projeto_tabela_binaria.qmd": {
+    "projeto_tabela_binaria.html": "ed80a69e"
+  },
+  "projeto_res_ping.qmd": {
+    "projeto_res_ping.html": "04f91894"
+  },
+  "projeto_leitura_ris.qmd": {
+    "projeto_leitura_ris.html": "6d693bff"
+  },
+  "projeto_diagrama.qmd": {
+    "projeto_diagrama.html": "f98ba318"
+  },
+  "projeto_dea.qmd": {
+    "projeto_dea.html": "e0fed5c9"
+  },
+  "r_07.qmd": {
+    "r_07.html": "a2ace8a5"
+  },
+  "jl_introducao.qmd": {
+    "jl_introducao.html": "d81433a8"
+  },
+  "py_introducao.qmd": {
+    "py_introducao.html": "d54f134c"
+  },
+  "py_pandas_numpy.qmd": {
+    "py_pandas_numpy.html": "e8464056"
+  },
+  "prj_um_bilhao.qmd": {
+    "prj_um_bilhao.html": "52dbf8e2"
+  },
+  "prj_ojs_downloader.qmd": {
+    "prj_ojs_downloader.html": "6b79da19"
+  },
+  "prj_wos_downloader.qmd": {
+    "prj_wos_downloader.html": "d24d9472"
+  },
+  "prj_json_map.qmd": {
+    "prj_json_map.html": "120fca8a"
+  },
+  "prj_flexdashboard.qmd": {
+    "prj_flexdashboard.html": "2eabf650"
+  },
+  "prj_dicionario_sinonimos.qmd": {
+    "prj_dicionario_sinonimos.html": "1e1a5bd5"
+  },
+  "prj_tabela_binaria.qmd": {
+    "prj_tabela_binaria.html": "e59dfc67"
+  },
+  "prj_res_ping.qmd": {
+    "prj_res_ping.html": "3199a8b6"
+  },
+  "prj_leitura_ris.qmd": {
+    "prj_leitura_ris.html": "635eab24"
+  },
+  "prj_diagrama.qmd": {
+    "prj_diagrama.html": "f11ee0b4"
+  },
+  "prj_dea.qmd": {
+    "prj_dea.html": "a82f301f"
   }
 }

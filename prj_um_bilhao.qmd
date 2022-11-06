@@ -1,7 +1,7 @@
 
 # Um bilhão
 
-Teste de velocidade para calcular de 1 até 1 bilhão, a partir do R.
+Teste de velocidade do cálculo da soma de 1 até 1 bilhão, a partir do R.
 
 ```{r}
 #| eval: true
@@ -84,6 +84,13 @@ print(toc - tic, 'secs')
 
 ## Python source 
 
+`code/um_bilhao.py`
+
+```{r file = 'code/um_bilhao.py'}
+#| eval: false
+#| echo: true 
+```
+
 ```{r}
 #| eval: false
 #| echo: true 
@@ -146,6 +153,14 @@ end
 
 ## Julia source
 
+`code/um_bilhao.jl`
+
+```{r file = 'code/um_bilhao.jl'}
+#| eval: false
+#| echo: true
+#| warning: false
+```
+
 ```{r}
 #| eval: false
 #| echo: true
@@ -187,9 +202,18 @@ tictoc::toc()
 
 ## C++ via Rcpp source
 
+`code/um_bilhao.cpp`
+
+```{r file = 'code/um_bilhao.cpp'}
+#| eval: false
+#| echo: true
+#| code-fold: show
+```
+
 ```{r}
 #| eval: false
 #| echo: true
+#| code-fold: show
 
 sourceCpp('code/um_bilhao.cpp')
 

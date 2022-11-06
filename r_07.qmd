@@ -1,0 +1,326 @@
+
+# Microdados POF 
+
+**Objetivo da aula:** atualizar os dados de @diniz2009 [Consumo de bens e serviços culturais nas metrópoles brasileiras - uma análise a partir de dados da POF].
+
+Baixar os microdados da Pesquisa de Orçamento Familiar (POF) 2017-2018 em: <https://www.ibge.gov.br/estatisticas/sociais/trabalho/9050-pesquisa-de-orcamentos-familiares.html>
+
+![Microdados POF](images/ibge-pof.png){#fig-ibge-pof}
+
+## Importar Dados
+
+Ver arquivo oficial do IBGE: `POF_2017_2018/Programas_de_Leitura_20210304/R/Leitura dos Microdados - R.R`
+
+```{r}
+#| eval: false
+#| echo: true
+
+library(tidyverse) 
+library(dtplyr) 
+library(data.table) 
+
+local_codigo <- getwd()
+local_dados <- '/mnt/raid0/Pesquisa/POF_2017_2018/Dados_20210304' 
+
+setwd(local_dados)
+# setwd(local_codigo)
+dir()
+
+# O IBGE não disponibiliza separador entre colunas para os microdados, para 
+# saber onde começa e termina cada variável devemos utilizar um arquivo de dicionário, 
+# que na POF existe para o R, e está disponível em:
+
+# POF/Memoria_de_Calculo_20200917/Memória de Cálculo/R
+
+# a função read.fwf() permite utilizar o argumento 'widths' onde indicamos qual 
+# o tamanho de cada variável, e o argumetno 'col.names' para os nomes das variáveis. Exemplo:
+# a primeira variável do arquivo 'MORADOR.txt' se chama 'UF' e tem tamanho 2 (duas colunas ou dois números) 
+# a segunda variável do arquivo 'MORADOR.txt' se chama 'ESTRATO_POF' e tem tamanho 4
+
+# REGISTRO - MORADOR
+morador <- 
+  read.fwf("MORADOR.txt" 
+           , widths = c(2, 4, 1, 9, 2, 1, 2, 2, 1, 2, 2, 4, 3, 1, 1,
+                        1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                        1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 1,
+                        2, 1, 2, 14, 14, 10)
+           , na.strings = c(" ")
+           , col.names = c("uf", "estrato_pof", "tipo_situacao_reg",
+                           "cod_upa", "num_dom", "num_uc",
+                           "cod_informante", "v0306", "v0401",
+                           "v04021", "v04022", "v04023", "v0403",
+                           "v0404", "v0405", "v0406", "v0407",
+                           "v0408", "v0409", "v0410", "v0411",
+                           "v0412", "v0413", "v0414", "v0415",
+                           "v0416", "v041711", "v041712", "v041721",
+                           "v041722", "v041731", "v041732", "v041741",
+                           "v041742", "v0418", "v0419", "v0420",
+                           "v0421", "v0422", "v0423", "v0424",
+                           "v0425", "v0426", "v0427", "v0428",
+                           "v0429", "v0430", "anos_estudo", "peso", 
+                           "peso_final", "renda_total")
+           , dec = "."
+)   
+
+data.table::fwrite(morador, 'morador.csv') 
+
+data.table::fread('morador.csv') |>
+    dtplyr::lazy_dt() ->
+    morador
+
+dim(morador)
+names(morador)
+head(morador)
+
+# REGISTRO - DESPESA COLETIVA
+despesa_coletiva <- 
+  read.fwf("DESPESA_COLETIVA.txt"
+           , widths = c(2, 4, 1, 9, 2, 1, 2, 2, 7, 2, 4, 10, 2, 2, 1
+                        , 10, 1, 12, 10, 10, 1, 1, 2, 14, 14, 10)
+           , na.strings = c(" ")
+           , col.names = c("uf", "estrato_pof", "tipo_situacao_reg",
+                           "cod_upa", "num_dom", "num_uc", "quadro",
+                           "seq", "v9001", "v9002", "v9005", "v8000",
+                           "v9010", "v9011", "v9012", "v1904",
+                           "v1905", "deflator", "v8000_defla",
+                           "v1904_defla", "cod_imput_valor",
+                           "cod_imput_quantidade", "fator_anualizacao",
+                           "peso", "peso_final", "renda_total"
+           )
+           , dec = "."
+)
+
+data.table::fwrite(despesa_coletiva, 'despesa_coletiva.csv') 
+
+data.table::fread('despesa_coletiva.csv') |>
+    dtplyr::lazy_dt() ->
+    despesa_coletiva
+
+# REGISTRO - DESPESA INDIVIDUAL
+despesa_individual <- 
+  read.fwf("DESPESA_INDIVIDUAL.txt" 
+           ,  widths = c(2,  4,  1,  9,  2, 1, 2, 2, 2, 7, 2, 10, 2
+                        , 2, 1, 1, 1, 12, 10, 1, 2, 14, 14, 10)
+           , na.strings = c(" ")
+           , col.names = c("uf", "estrato_pof", "tipo_situacao_reg",
+                           "cod_upa", "num_dom", "num_uc",
+                           "cod_informante", "quadro", "seq", "v9001",
+                           "v9002", "v8000", "v9010", "v9011", "v9012",
+                           "v4104", "v4105", "deflator", "v8000_defla",
+                           "cod_imput_valor", "fator_anualizacao",
+                           "peso", "peso_final", "renda_total"
+           )
+           , dec = "."
+  )   
+
+data.table::fwrite(despesa_individual, 'despesa_individual.csv') 
+
+# REGISTRO - ALUGUEL ESTIMADO
+aluguel_estimado <- 
+  read.fwf("ALUGUEL_ESTIMADO.txt" 
+           , widths = c(2, 4, 1, 9, 2, 1, 2, 7, 2, 10, 2, 2, 12, 10, 1, 2, 14, 14, 10)
+           , na.strings = c(" ")
+           , col.names = c("uf", "estrato_pof", "tipo_situacao_reg",
+                           "cod_upa", "num_dom", "num_uc", "quadro",
+                           "v9001", "v9002", "v8000", "v9010", "v9011",
+                           "deflator", "v8000_defla", "cod_imput_valor",
+                           "fator_anualizacao", "peso", "peso_final",
+                           "renda_total"
+           )
+           , dec = "."
+  )   
+
+data.table::fwrite(aluguel_estimado, 'aluguel_estimado.csv') 
+
+# REGISTRO - RENDIMENTO DO TRABALHO
+rendimento_trabalho <- 
+  read.fwf("RENDIMENTO_TRABALHO.txt" 
+           , widths = c(2, 4, 1, 9, 2, 1, 2, 2, 1, 1, 7, 1, 1, 1, 1, 1, 1, 7, 7, 7
+                        , 7, 2, 2, 3, 1, 12, 10, 10, 10, 10, 1, 1, 14, 14, 10)
+           , na.strings = c(" ")
+           , col.names = c("uf", "estrato_pof", "tipo_situacao_reg",
+                           "cod_upa", "num_dom", "num_uc",
+                           "cod_informante", "quadro", "sub_quadro",
+                           "seq", "v9001", "v5302", "v53021", "v5303",
+                           "v5304", "v5305", "v5307", "v8500", "v531112",
+                           "v531122", "v531132", "v9010", "v9011",
+                           "v5314", "v5315", "deflator", "v8500_defla",
+                           "v531112_defla", "v531122_defla",
+                           "v531132_defla", "cod_imput_valor",
+                           "fator_anualizacao", "peso", "peso_final",
+                           "renda_total"
+           )
+           , dec = "."
+  )
+
+data.table::fwrite(rendimento_trabalho, 'rendimento_trabalho.csv') 
+
+# REGISTRO - OUTROS RENDIMENTOS
+outros_rendimentos <- 
+  read.fwf("OUTROS_RENDIMENTOS.txt" 
+           , widths = c(2, 4, 1, 9, 2, 1, 2, 2, 2, 7, 10, 10, 2
+                        , 2, 12, 10, 10, 1, 1, 14, 14, 10
+           )
+           , na.strings = c(" ")
+           , col.names = c("uf", "estrato_pof", "tipo_situacao_reg",
+                           "cod_upa", "num_dom", "num_uc",
+                           "cod_informante", "quadro", "seq", "v9001",
+                           "v8500", "v8501", "v9010", "v9011",
+                           "deflator", "v8500_defla", "v8501_defla",
+                           "cod_imput_valor", "fator_anualizacao",
+                           "peso", "peso_final", "renda_total")
+           , dec = "."
+  )   
+
+data.table::fwrite(outros_rendimentos, 'outros_rendimentos.csv') 
+
+# REGISTRO - DOMICILIO
+domicilio <- 
+  read.fwf("DOMICILIO.txt" 
+           , widths = c(2, 4, 1, 9, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 
+                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 14, 14
+           )
+           , na.strings = c(" ")
+           , col.names = c("uf", "estrato_pof", "tipo_situacao_reg",
+                           "cod_upa", "num_dom", "v0201", "v0202", 
+                           "v0203", "v0204", "v0205", "v0206", "v0207",
+                           "v0208", "v0209", "v02101", "v02102",
+                           "v02103", "v02104", "v02105", "v02111",
+                           "v02112", "v02113", "v0212", "v0213",
+                           "v02141", "v02142", "v0215", "v02161", 
+                           "v02162", "v02163", "v02164", "v0217", 
+                           "v0219", "v0220", "v0221", "peso",
+                           "peso_final"
+           )
+           , dec = "."
+  )   
+
+data.table::fwrite(domicilio, 'domicilio.csv') 
+
+```
+
+## @diniz2009 Tabela 1
+
+Na POF ver Cadastro de Produtos em `POF_2017_2018/Documentacao_20210423/Cadastro de Produtos.xls` e selecionar os bens e serviços culturais. Como feito na @tbl-quadro-bens-culturais.
+
+| QUADRO | CÓDIGO DO PRODUTO | DESCRIÇÃO DO PRODUTO                         |
+| -------|-------------------|----------------------------------------------|
+| 27     | 2701801           |             REVISTA DE ARTESANATO            |
+| 18     | 1800801           |             QUADRO OU MOLDURA                |
+| 18     | 1800802           |             TELA A OLEO                      |
+| 18     | 1800803           |             MOLDURA DE QUADRO                |
+| 18     | 1800804           |             GRAVURA                          |
+| 18     | 1800805           |             POSTER                           |
+| 18     | 1800901           |             PORTA-RETRATO                    |
+| 18     | 1800902           |             MOLDURA DE FOTO                  |
+| 32     | 3201701           |             LIVRO NAO DIDATICO IMPRESSO      |
+| 32     | 3201801           |             LIVRO NAO DIDATICO DIGITAL       |
+| 28     | 2803101           |             FITA DE VIDEOCASSETE VIRGEM      |
+| 28     | 2803201           |             FITA DE VIDEOCASSETE PRE-GRAVADA |
+| 28     | 2803301           |             ALUGUEL DE FITA DE VIDEOCASSETE  |
+| 28     | 2803401           |             FITA CASSETE VIRGEM              |
+| 28     | 2803501           |             FITA CASSETE PRE-GRAVADA         |
+| 28     | 2803601           |             DISCO DE VINIL                   |
+| 28     | 2803801           |             FITA DE FILMADORA                |
+| 41     | 4102001           |             CINEMA (INGRESSO)                |
+| 41     | 4102101           |             TEATRO (INGRESSO)                |
+| 41     | 4104401           |             MUSEU (INGRESSO)                 |
+| 41     | 4104501           |             CIRCO (INGRESSO)                 |
+| 41     | 4106501           |             EXPOSICAO (INGRESSO)             |
+| 28     | 2800501           |             CIRCO (INGRESSO)                 |
+
+: Dispêndio com bens e serviços culturais  {#tbl-quadro-bens-culturais}
+
+
+```{r}
+#| eval: false 
+#| echo: true
+
+bens_culturais <- c('4906201', '2701801', '1800801', '1800802', '1800803', '1800804', 
+                    '1800805', '1800901', '1800902', '3201701', '3201801', '2803101', 
+                    '2803201', '2803301', '2803401', '2803501', '2803601', '2803801', 
+                    '4102001', '4102101', '4104401', '4104501', '4106501', '2800501')
+
+names(despesa_individual)
+
+vari <- c('uf', 'estrato_pof', 'tipo_situacao_reg', 'cod_upa', 'num_dom', 'num_uc', 
+          'v9001', 'v8000')
+
+despesa_individual_cultura <- despesa_individual[despesa_individual$v9001 %in% bens_culturais, vari]
+
+despesa_coletiva_cultura <- despesa_coletiva[despesa_coletiva$v9001 %in% bens_culturais, vari]
+
+despesa_cultura <- rbind(despesa_coletiva_cultura, despesa_individual_cultura)
+
+# deletar linhas com valores ignorados, ver dicionário
+despesa_cultura <- despesa_cultura[ despesa_cultura$v8000 != 9999999.99, ]
+
+# agregar o total gasto com cultura para cada domicílio
+consumo_cultura_ag <- aggregate(despesa_cultura$v8000, list(cod_upa = despesa_cultura$cod_upa, 
+                                                            num_dom = despesa_cultura$num_dom, 
+                                                            num_uc = despesa_cultura$num_uc),
+                                sum, na.rm = TRUE) 
+
+consumo_cultura_ag$consumo_cultura <- consumo_cultura_ag$x
+consumo_cultura_ag$x <- NULL
+
+# renda total do domicílio
+trabalho[ 1:20, c('cod_upa','num_dom','num_uc','cod_informante','renda_total')]
+
+trabalho_domicilio <- trabalho[ trabalho$cod_informante==1, c('cod_upa','num_dom','num_uc','renda_total')]
+
+cultura <- merge(consumo_cultura_ag, trabalho_domicilio, all.x=TRUE, all.y=FALSE)
+
+cultura$prop_cultura <- cultura$consumo_cultura / cultura$renda_total
+
+cultura <- cultura[ !is.na(cultura$renda_total), ]
+
+cultura2 <- merge(domicilio,cultura, all.x=TRUE, all.y=FALSE)
+
+table(is.na(cultura2$consumo_cultura), useNA='ifany')
+
+cultura2$consumiu_cultura <- ifelse(is.na(cultura2$consumo_cultura), 'Nao Consumiu', 'Sim Consumiu')
+
+table(cultura2$consumiu_cultura)
+
+cultura2$tipo_situacao_reg <- factor(cultura2$tipo_situacao_reg, 
+                                     levels=c(1,2), 
+                                     labels=c('Urbano','Rural'))
+table(cultura2$tipo_situacao_reg)
+
+# porporção dos domicílios Rural ou Urbano que tiveram 
+table(cultura2$tipo_situacao_reg, cultura2$consumiu_cultura, useNA='ifany')
+addmargins(table(cultura2$tipo_situacao_reg, cultura2$consumiu_cultura, useNA='ifany'))
+prop.table(table(cultura2$tipo_situacao_reg, cultura2$consumiu_cultura, useNA='ifany'))
+addmargins(prop.table(table(cultura2$tipo_situacao_reg, cultura2$consumiu_cultura, useNA='ifany')))
+
+# ----------
+# região metropolitana
+
+capital <- c(1101,1102,1201,1301:1306,1401,1402,1501:1503,1601,1602,1701,2101:2103,2201:2203,2301:2306,2401,2402, 2501:2503,2601:2603,2701:2703,2801,2802,2901:2906,3101:3106,3201,3202,3301:3309,3501:3509,4101:4105,4201,4202,4301:4306,5001:5003,5101,5102,5201:5203,5301:5306)
+
+regmtr <- c(1307,1504,1505,1603,2104,2307:2309,2403,2504,2505,2604:2606,2704,2803,2907:2909,3107:3109,3203:3205,3310:3318,3510:3515,4106:4108,4203,4204,4307:4309,5103,5204:5206,5301:5306)
+
+cultura2$regmtr <- ifelse(cultura2$estrato_pof %in% c(regmtr, capital), 'Reg Metropolitana', 'Nao RegMtr')
+
+table(cultura2$regmtr, useNA = 'ifany')
+table(cultura2$regmtr, cultura2$consumiu_cultura, useNA = 'ifany')
+addmargins(table(cultura2$regmtr, cultura2$consumiu_cultura, useNA = 'ifany'))
+
+
+# ----------
+# capital vs interior
+
+cultura2$capital <- ifelse(cultura2$estrato_pof %in% capital, 'Capital','Interior')
+
+table(cultura2$capital, cultura2$consumiu_cultura, useNA = 'ifany')
+addmargins(table(cultura2$capital, cultura2$consumiu_cultura, useNA = 'ifany'))
+
+# ----------
+
+table(cultura2$consumiu_cultura, useNA = 'ifany')
+
+# parte 2 da aula
+# pipe 
+# tibble 
+```

@@ -6,7 +6,7 @@ project:
     browser: false
 
 book:
-  title: "ciência de dados"
+  title: "ciência de dados _notas"
   author:
     - name: Roney Fraga Souza
       affiliations:
@@ -14,29 +14,41 @@ book:
   date: "today"
   date-format: iso 
   search: true
+  reader-mode: true
+  repo-actions: [edit, issue]
+  sharing: [twitter, facebook]
+  twitter-card: true
   site-url: https:roneyfraga.com/cidados
   repo-url: https://github.com/roneyfraga/cidados
+
+  page-footer:
+    left: |
+      Notas sobre Ciência de Dados, Análise de Dados e Programação.
+    right: |
+      Material construído com <a href="https://quarto.org/">Quarto</a>.
+
   chapters:
     - index.qmd
 
     - part: r.qmd 
       chapters:
-        - r-introducao.qmd
-        - r-objetos.qmd
-        - r-tidyverse.qmd
-        - r-graficos.qmd
-        - r-data.table.qmd
-        - r-quarto.qmd
+        - r_01.qmd
+        - r_02.qmd
+        - r_03.qmd
+        - r_04.qmd
+        - r_05.qmd
+        - r_06.qmd
+        - r_07.qmd
 
     - part: julia.qmd
       chapters:
-        - julia-introducao.qmd
+        - jl_introducao.qmd
 
     - part: python.qmd
       chapters:
-        - python-introducao.qmd
-        - python-pandas-numpy.qmd
-        # - python-networks.qmd
+        - py_introducao.qmd
+        - py_pandas_numpy.qmd
+        # - py_networks.qmd
 
     # - part: redes.qmd
         # tidygraph
@@ -48,19 +60,21 @@ book:
         # processamento de linguagem natural
         # structutal topic modeling 
 
+    # - part: aprendizado de maqina
+
     - part: projetos.qmd
       chapters:
-        - projeto-um-bilhao.qmd
-        - projeto-ojs-downloader.qmd
-        - projeto-wos-downloader.qmd
-        - projeto-json-map.qmd
-        - projeto-flexdashboard.qmd
-        - projeto-dicionario-sinonimos.qmd
-        - projeto-tabela-binaria.qmd
-        - projeto-res-ping.qmd
-        - projeto-leitura-ris.qmd
-        - projeto-diagrama.qmd
-        - projeto-dea.qmd
+        - prj_um_bilhao.qmd
+        - prj_ojs_downloader.qmd
+        - prj_wos_downloader.qmd
+        - prj_json_map.qmd
+        - prj_flexdashboard.qmd
+        - prj_dicionario_sinonimos.qmd
+        - prj_tabela_binaria.qmd
+        - prj_res_ping.qmd
+        - prj_leitura_ris.qmd
+        - prj_diagrama.qmd
+        - prj_dea.qmd
 
     - references.qmd
 

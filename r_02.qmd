@@ -1,0 +1,18 @@
+
+# Vetor, matriz, data frame e lista
+
+- vector 
+- matrix
+- data frame
+- list
+- table, aggregate, reshape, merge
+
+`code/cidados_aula02.R`
+
+```{r file = 'code/cidados_aula02.R'}
+#| eval: false
+#| echo: true
+#| code-fold: show
+```
+
+

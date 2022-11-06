@@ -1,17 +1,6 @@
-
-# Velocidade com `data.table`
-
-- data.table
-
-```{r filename='r-05.R'}
-#| eval: false
-#| echo: true
-#| code-fold: show
-
-
 # ------------------------------------------------------------
 # 
-# File Name: CiDados_aula05.R
+# File Name: cidados_aula05.R
 #
 # Purpose: Ciência de Dados para Economistas - Faculdade de Economia UFMT
 # 
@@ -631,5 +620,4 @@ br2010 |>
     print(n = Inf)
 tictoc::toc()
 # 7.54
-```
 

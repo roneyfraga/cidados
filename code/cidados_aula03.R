@@ -1,20 +1,6 @@
-
-# `tidyverse` everything
-
-- Parte 1: `tibble` e `pipe` 
-- Parte 2: `dplyr` basic
-- Parte 3: `tidyr` basic
-- Parte 4: `dplyr` advanced
-- Parte 5: `tidyr` advanced
-
-```{r filename='r-03.R'}
-#| eval: false
-#| echo: true
-#| code-fold: show
-
 # ------------------------------------------------------------
 # 
-# File Name: CiDados_aula03.R
+# File Name: cidados_aula03.R
 #
 # Purpose: Ciência de Dados para Economistas - Faculdade de Economia UFMT
 # 
@@ -1307,5 +1293,3 @@ repos |>
 tibble(repo = gh_repos) |> 
     unnest_auto(repo) |>
     unnest_auto(repo)
-```
-

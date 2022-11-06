@@ -1,19 +1,6 @@
-
-# Funções e tipos de dados {#r-introducao}
-
-- introduction to R
-- vetor
-- matriz
-- data frame
-
-```{r filename='r-01.R'}
-#| eval: false
-#| echo: true
-#| code-fold: show
-
 # ------------------------------------------------------------
 # 
-# File Name: CiDados_aula01.R
+# File Name: cidados_aula01.R
 # 
 # Purpose: Ciência de Dados para Economistas - Faculdade de Economia UFMT
 #
@@ -578,5 +565,4 @@ x[x == y] |>
 x <- c(1, 5, 7)
 y <- c(1, 2, 3, 4, 5, 6, 7) 
 x + y
-```
 

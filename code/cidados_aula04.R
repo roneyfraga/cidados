@@ -1,18 +1,6 @@
-
-# Gráficos com `ggplot2`
-
-- ggplot2
-
-
-```{r filename='r-04.R'}
-#| eval: false
-#| echo: true
-#| code-fold: show
-
-
 # ------------------------------------------------------------
 # 
-# File Name: CiDados_aula04.R
+# File Name: cidados_aula04.R
 #
 # Purpose: Ciência de Dados para Economistas - Faculdade de Economia UFMT
 # 
@@ -443,6 +431,3 @@ norm + geom_point(shape = ".") # Pixel sized
 norm + geom_point(alpha = 1 / 3) 
 norm + geom_point(alpha = 1 / 5) 
 norm + geom_point(alpha = 1 / 10)
-```
-
-

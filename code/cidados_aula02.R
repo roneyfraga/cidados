@@ -1,20 +1,6 @@
-
-# Vetor, matriz, data frame e lista
-
-- vector 
-- matrix
-- data frame
-- list
-- table, aggregate, reshape, merge
-
-```{r filename='r-02.R'}
-#| eval: false
-#| echo: true
-#| code-fold: show
-
 # ------------------------------------------------------------
 # 
-# File Name: CiDados_aula02.R
+# File Name: cidados_aula02.R
 #
 # Purpose: Ciência de Dados para Economistas - Faculdade de Economia UFMT
 #
@@ -39,7 +25,6 @@
 # http://creativecommons.org/licenses/by-nc-sa/3.0/
 #
 # ------------------------------------------------------------
-
 
 # vetor (revisão)
 # matriz
@@ -498,6 +483,3 @@ lst[['Inteiros']]
 
 lst$`Numeros reais`
 lst[['Numeros reais']]
-```
-
-

@@ -1,0 +1,16 @@
+
+# Funções e tipos de dados {#r-introducao}
+
+- introduction to R
+- vetor
+- matriz
+- data frame
+
+`code/cidados_aula01.R`
+
+```{r file = 'code/cidados_aula01.R'}
+#| eval: false
+#| echo: true 
+#| cold-fold: show
+```
+
