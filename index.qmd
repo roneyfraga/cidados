@@ -1,0 +1,13 @@
+
+# Introdução {.unnumbered}
+
+Notas de aula sobre Ciência de Dados em [`R`](r.qmd).
+
+Alguns experimentos com [`Julia`](julia.qmd) e [`Python`](python.qmd).
+
+Alguns pequenos [`Projetos`](projetos.qmd), feitos principalmente em R. 
+
+- TODO
+    - Parte: redes
+    - Parte: análise de texto
+

@@ -1,0 +1,123 @@
+
+# Ler arquivo `.ris`
+
+`Rworkspace/2018_Lucas-read-ris`
+
+
+```{r filename='leitura-ris.R'}
+#| eval: false
+#| echo: true
+#| code-fold: show
+
+
+library(tidyverse)
+library(readr)
+
+mystring <- read_file("MembrosORIGINAL.ris")
+mylist <- strsplit(mystring, '\n\n')
+mylist2 <- strsplit(mylist[[1]], '\n')
+
+getTags <- function(lista = lista, tag = tag) {
+    tag2 <- paste0('^', tag, ' ')
+    ll <- list()
+    lb <- list()
+    for(i in seq_along(lista)) {
+        ll[[i]] <- grep(tag2, lista[[i]], value = FALSE)
+        if(length(ll[[i]]) > 0){ 
+            lb[[i]] <- lista[[i]][[ll[[i]]]]
+        }else{ 
+            lb[[i]] <- paste0(tag, '  - Campo ausente')
+        }
+    }
+    lb <- unlist(lb)
+    lb2 <- gsub(paste0(tag, '  - '), '', lb)
+    return(lb2)
+}
+
+TY <- getTags(lista = mylist2, tag = 'TY')
+NOME <- getTags(lista = mylist2, tag = 'NOME')
+CITA <- getTags(lista = mylist2, tag = 'CITA')
+BOLS <- getTags(lista = mylist2, tag = 'BOLS')
+ENDE <- getTags(lista = mylist2, tag = 'ENDE')
+ARE1 <- getTags(lista = mylist2, tag = 'ARE1')
+
+a <- data.frame(TY, NOME, CITA, BOLS, ENDE, ARE1)
+dplyr::glimpse(a)
+```
+
+`MembrosORIGINAL.ris`
+
+```{ris}
+TY  - MEMBRO
+NOME  - Hernani Luiz Brinati
+CITA  - BRINATI, H. L.;BRINATI, HERNANI LUIZ
+BOLS  - 
+ENDE  - Universidade de São Paulo, Escola Politécnica, Departamento de Engenharia Naval e Oceânica. AV. PROF. MELLO MORAES. 2231 BUTANTA 05508900 - São Paulo, SP - Brasil Telefone: (11) 30915343 Fax: (11) 30915717
+URLC  - http://lattes.cnpq.br/2667952226532588
+DATA  - 28/08/2017
+RESU  - possui graduação em Engenharia Naval pela Universidade de São Paulo (1966), mestrado em Engenharia Naval e Oceânica pela Universidade de São Paulo (1971), mestrado em Engenharia Mecânica - Massachusetts Institute Of Technology (1973) e doutorado em Engenharia Naval e Oceânica pela Universidade de São Paulo (1976). Atualmente é professor titular da Universidade de São Paulo. Tem experiência na área de Engenharia Naval e Oceânica, com ênfase em Máquinas Marítimas, atuando principalmente nos seguintes temas: controle, instalacao propulsora, projeto, posicionamento dinamico e projeto de navio. Tem-se dedicado nos últimos anos ao estudo de novas técnicas de aprendizado. É o coordenador da disciplina de Introdução à Engenharia na EPUSP, que trabalha com essas técnicas. (Texto informado pelo autor)
+FO1a  - 1973
+FO1b  - 1976
+FO1c  - Doutorado em Engenharia Naval e Oceânica
+FO1d  - Universidade de São Paulo, USP, Brasil
+FO1e  - Título: INVESTIGACAO SOBRE APLICACAO DO FILTRO ESTENDIDO DE KALMAN PARA IDENTIFICACAO DA NAMOBRABILIDADE DO NAVIO, Ano de obtenção: 1976. Orientador: ATAIR RIOS NETO. Palavras-chave: Filtro de Kalman; Identificacao de Sistemas; Manobrabilidade. Grande área: Engenharias
+FO2a  - 1971
+FO2b  - 1973
+FO2c  - Mestrado em Engenharia Mecânica
+FO2d  - Massachusetts Institute Of Technology, M
+FO2e  - I.T, Estados Unidos. Título: System Indentification Applied to Maneuvering Trials,Ano de Obtenção: 1973. Orientador: Martin A Abkowitz. Palavras-chave: Coeficientes Hidrodinamicos; Identificacao de Sistemas; Manobrabilidade. Grande área: Engenharias
+FO3a  - 1968
+FO3b  - 1971
+FO3c  - Mestrado em Engenharia Naval e Oceânica
+FO3d  - Universidade de São Paulo, USP, Brasil
+FO3e  - Título: ANALISE DOS METODOS DE CALCULO DE FREQUENCIAS NATURAIS PARA VIBRACAO VERTICAL DO NAVIO,Ano de Obtenção: 1971. Orientador: MAURO ORMEU CARDOSO AMORELLI. Palavras-chave: Controle de Sistemas; Frequencia Natural; Identification; Maneuverability; Metodos de Calculo; Saip Coefficients. Grande área: Engenharias Setores de atividade: Fabricação e Montagem de Embarcações, Veículos Ferroviários e Aeronaves.
+FO4a  - 1962
+FO4b  - 1966
+FO4c  - Graduação em Engenharia Naval
+FO4d  - Universidade de São Paulo, USP, Brasil
+FO4e  - 
+ARE1  - Grande área: Engenharias / Área: Engenharia Naval e Oceânica / Subárea: Máquinas Marítimas.
+ARE2  - Grande área: Engenharias / Área: Engenharia Naval e Oceânica / Subárea: Máquinas Marítimas/Especialidade: Controle de Sistemas Oceânicos.
+ARE3  - Grande área: Engenharias / Área: Engenharia Naval e Oceânica / Subárea: Máquinas Marítimas/Especialidade: Dinâmica de Sistemas.
+ID1a  - Inglês
+ID1b  - Compreende Bem, Fala Razoavelmente, Lê Bem, Escreve Razoavelmente.
+ID2a  - Espanhol
+ID2b  - Compreende Bem, Fala Razoavelmente, Lê Bem, Escreve Razoavelmente.
+ID3a  - Francês
+ID3b  - Compreende Razoavelmente, Fala Pouco, Lê Razoavelmente, Escreve Pouco.
+ID4a  - Italiano
+ID4b  - Compreende Pouco, Fala Pouco, Lê Razoavelmente, Escreve Pouco.
+
+TY  - MEMBRO
+NOME  - Helio Mitio Morishita
+CITA  - MORISHITA, H. M.;Morishita, H.M.;MORISHITA, H.M.;MORISHITA, HELIO M.;MORISHITA, HELIO MITIO;MORISHITA, HE'LIO M.;Morishita, Helio Mitio;MORISHITA, HÉLIO;MORISHITA, H.H.
+BOLS  - 
+ENDE  - Universidade de São Paulo, Escola Politécnica, Departamento de Engenharia Naval e Oceânica. Av. Prof. Mello Moraes, 2231 Butantã 05508-030 - Sao Paulo, SP - Brasil Telefone: (11) 30915345 Fax: (11) 30915717
+URLC  - http://lattes.cnpq.br/7528314710958156
+DATA  - 01/03/2018
+RESU  - Possui graduação em Engenharia Naval e Oceânica pela Universidade de São Paulo (1975), mestrado em Engenharia Naval e Oceânica pela Universidade de São Paulo (1979) e doutorado em Engenharia Naval e Oceânica pela Universidade de São Paulo (1986). Atualmente é professor associado da Universidade de São Paulo. A área de pesquisa é dinâmica e controle de sistemas oceânicos e os projetos recentes tem sido a dinâmica de multicorpos e o sistema de posicionamento dinâmico de veículos oceânicos aplicando abordagens não lineares para a estimação do vetor de estado e controle. (Texto informado pelo autor)
+FO1a  - 1980
+FO1b  - 1986
+FO1c  - Doutorado em Engenharia Naval e Oceânica
+FO1d  - Universidade de São Paulo, USP, Brasil
+FO1e  - Título: ESTUDO DE CONTROLADOR ADAPTATIVO PARA UMA INSTALACAO PROPULSORA MARITIMA, Ano de obtenção: 1986. Orientador: HEMANI LUIZ BRINATI. Palavras-chave: Controle Adaptativo; Controle Auto-Ajustavel; Instalacao Maritima. Grande área: Engenharias
+FO2a  - 1975
+FO2b  - 1979
+FO2c  - Mestrado em Engenharia Naval e Oceânica
+FO2d  - Universidade de São Paulo, USP, Brasil
+FO2e  - Título: MODELAGEM E SIMULACAO DE UMA INSTALACAO PROPULSORA A VAPOR,Ano de Obtenção: 1979. Orientador: OTAVIO DE MATTOS SILVEIRA. Bolsista do(a): Fundação de Amparo à Pesquisa do Estado de São Paulo, FAPESP, Brasil. Palavras-chave: Simulacao Dinamica; Instalacao Propulsora; Modelagem. Grande área: Engenharias
+FO3a  - 1971
+FO3b  - 1975
+FO3c  - Graduação em Engenharia Naval e Oceânica
+FO3d  - Universidade de São Paulo, USP, Brasil
+FO3e  - 
+ARE1  - Grande área: Engenharias / Área: Engenharia Naval e Oceânica / Subárea: Máquinas Marítimas/Especialidade: Análise de Sistemas Propulsores.
+ARE2  - Grande área: Engenharias / Área: Engenharia Naval e Oceânica / Subárea: Máquinas Marítimas/Especialidade: Controle e Automação de Sistemas Propulsores.
+ARE3  - Grande área: Engenharias / Área: Engenharia Naval e Oceânica / Subárea: Dinâmica e Controle de Sistemas Oceânicos.
+ID1a  - Inglês
+ID1b  - Fala Razoavelmente, Lê Bem, Escreve Razoavelmente.
+ID2a  - Espanhol
+ID2b  - Fala Razoavelmente, Lê Bem, Escreve Pouco.
+
+```
+

@@ -1,0 +1,258 @@
+
+
+# DEA
+
+- Análise Envoltória de Dados
+- Data Envelopment Analysis
+
+
+```{r filename='dea-benchmarking.R'}
+#| eval: false
+#| echo: true
+#| code-fold: show
+
+
+# TODO: Dados da Tabla 2.1 Valores observados concesionarios, do livro de Coll e Blasco (2006) 
+# INPUTS
+# x1 = Número de empleados 
+# x2 = Depreciación del Inmovilizado, como proxy del capital
+# OUTPUTS
+# y1 = Número de vehículos vendidos 
+# y2 = Número de órdenes de trabajo recibidas en taller
+# 
+# Coll e Blasco (2006) Evaluación de la Eficiencia mediante el Análisis Envolvente de Datos
+# Ferreira e Gomes (2009) Introdução à Análise Envoltória de Dados. Teoria, Modelos e Aplicações
+# Bogetoft, Otto (2011) Benchmark and frontier analysis using DEA and SFA and R
+# Author: roney
+###############################################################################
+
+library(Benchmarking)
+
+## dea(X, Y, RTS = "vrs", ORIENTATION = "in", XREF = NULL, YREF = NULL,
+#	FRONT.IDX = NULL, SLACK = FALSE, DUAL = FALSE, DIRECT = NULL, param = NULL,
+#	TRANSPOSE = FALSE, FAST = FALSE, LP = FALSE, CONTROL = NULL, LPK = NULL)
+#
+# Tabla 2.1 Valores observados concesionarios
+#   	x1	x2	y1	y2
+#	A	8	8	14	20
+#	B	11	15	25	42
+#	C	14	12	8	30
+#	D	12	13	25	8
+#	E	11	18	40	22
+#	F	18	20	24	30
+
+data.frame(x1 = c(8, 11, 14, 12, 11, 18),
+           x2 = c(8, 15, 12, 13, 18, 20),
+           y1 = c(14, 25, 8, 25, 40, 24),
+           y2 = c(20, 42, 30, 8, 22, 30)) ->
+    coll.blasco
+
+namesAF <- c("A", "B", "C", "D", "E", "F")
+namesX <- c("x1", "x2")
+namesY <- c("y1", "y2")
+namesXY <- c("x1", "x2", "y1", "y2")
+
+insumos <- matrix(c(coll.blasco$x1, coll.blasco$x2), nrow = 6, ncol = 2, byrow = FALSE, dimnames = list(namesAF, namesX))
+is.matrix(insumos)
+insumos
+produtos <- matrix(c(coll.blasco$y1, coll.blasco$y2), nrow = 6, ncol = 2, byrow = FALSE, dimnames = list(namesAF, namesY))
+is.matrix(produtos)
+produtos
+
+
+######## CCR Input Orientado #######
+# Em benchmarking modelo CCR (crs) input orientado, o problema primal é a minimização do insumos dada a
+# quantidade de produtos. Modelo envoltório (que usa lambda), ver notação página 72 Ferreira e Gomes (2009)
+
+ccr.in <- dea(insumos, produtos, RTS = "crs", ORIENTATION = "in", SLACK = TRUE) # eff CCR insumo orientado com folgas
+
+summary(ccr.in) # função que trás o resumo das medidas, como número e % de unidades eficientes em cada
+# faixa de valor, assim como folgas. Muito útil para grande quantidade de DMU's
+
+lambda(ccr.in)	# equivalente a saída Benchmarking do SAID, indica quais DMU's estão sendo referência,
+# as que estão nas colunas, para as demais DMU's, que estão nas linhas.
+# em outras palavras, parceiros relevantes (peers) para as DMU's ineficientes, e o valor do 
+# lambda indica o quanto a DMU eficiente, o benchmarking, é importante para a DMU ineficiente
+
+lambda(ccr.in, KEEPREF = TRUE)  # quando a opção "KEEPREF = TRUE" é utilizada todas as DMU's são mostradas
+# nas colunas, não penas as eficiêntes.
+
+print(ccr.in$eff, digits = 2)	# para mostrar a eficiência das DMU's
+
+which( ccr.in$eff == 1 & !ccr.in$slack)	# para mostrar apenas as DMU's eficientes e sem folga
+
+data.frame("eff" = ccr.in$eff, "ins" = insumos, "rad" = ccr.in$eff * insumos, "fol" = ccr.in$sx, "alv" = insumos - ccr.in$sx) 
+# i) eff, ii) insumos observados ou atual, iii) movimento radial, iv) folga e v) alvo
+# 
+# iii) movimento radial é o cálculo da redução dos insumos em direção a fronteira eficiente
+# 	   e é obtido pela multiplicação dos insumos observados pela eficiência das respectivas
+#	   unidades, ou pela multiplicação da unidade do insumo da unidade ineficiente pelo
+#	   lambda do(s) seu(s) benchmarks. (ver página 101 de Ferreira e Gomes, 2009)
+# iv) mesmo projetando DMU em direção a fronteira eficiente devido a possibilidade
+#	  de existir alguns seguimentos da fronteira poliangular linear paralelos aos eixos	
+#	  coordenadas é possível ocorrer folgas nesses pontos. Ou seja, mesmo que o movimento
+#	  radial tenha projetado a DMU para a fronteira eficiente é possivel existir alguma
+#	  ineficiencia, que caracterizamos como folga. (ver página 102 de Ferreira e Gomes, 2009)
+# v) o alvo é o movimento radial dimunuido das possíveis folgas
+
+data.frame("eff" = ccr.in$eff, "pro" = produtos, "rad" = ccr.in$eff * produtos, "fol" = ccr.in$sy, "alv" = produtos + ccr.in$sy)	
+# i) eff, ii) produtos observados ou atual, iii) movimento radial, iv) folga e v) alvo
+# o mesmo do exemplo anterior mas agora aplicado para aos produtos
+
+## Problema da Dualidade ## 
+# no problema dual do modelo CCR (crs) insumos orientado [maximização] é expressa a forma multiplicada desse modelo, 
+# onde os lambdas são substituidos pelos peso insumo (u) e peso produto (v). ver notação pág 72 Ferreira e Gomes (2009)
+# 
+# os pesos, peso insumo (u) e peso produto (v), que permitem calcular os insumos e produtos virtuais conforme são 
+# obtidos na saída do SAID e no modelo insumo orientado multiplicadores (primal) de Coll e Blasco (2006) só são 
+# encontrados pelo problema dual no pacote Benchmarking
+ccr.in.dual <- dea.dual(insumos, produtos, RTS = "crs", ORIENTATION = "in")
+names(ccr.in.dual)
+print(cbind("eff" = ccr.in.dual$eff, ccr.in.dual$u, ccr.in.dual$v), digits = 5) 
+# o valor eficiência é exatamente igual aos do SAID e do Excel, mas os pesos apresentam valores diferentes
+  
+# para detalhes ver tabela 4.8 na página 130 de Ferreira e Gomes (2009) ou nas páginas 117 e 118 tabelas 4.2 e 4.3  
+
+
+######## CCR Output Orientado #######
+# Em benchmarking modelo CCR (crs) output orientado, o problema primal é a maximização do produto dada a
+# quantidade de insumos. Modelo envoltório (que usa lambda), ver notação página 130 Ferreira e Gomes (2009)
+
+ccr.out <- dea(insumos, produtos, RTS = "crs", ORIENTATION = "out", SLACK = TRUE)
+summary(ccr.out)
+lambda(ccr.out) # apresentou uma pequena mudança no valor dos lambdas comparado com o resultado do SAID, mas como 
+# o modelo é CCR acredito não deveria acontecer isso
+lambda(ccr.out, KEEPREF = TRUE)
+print(1 / ccr.out$eff, digits = 2)
+which(1 / ccr.out$eff == 1 & !ccr.out$slack)
+data.frame("eff" = 1 / ccr.out$eff, "ins" = insumos, "rad" = (1 / ccr.out$eff) * insumos, "fol" = ccr.out$sx, "alv" = insumos - ccr.in$sx)
+data.frame("eff" = 1 / ccr.out$eff, "pro" = produtos, "rad" = 1 / ccr.out$eff * produtos, "fol" = ccr.out$sy, "alv" = produtos + ccr.out$sy)	
+# apresentou pequenas mudanças diante dos resultodos do SAID #
+
+# o problema dual do modelo CCR (crs) output orientado é a minimização, modelo dos multiplicadores, que considera
+# os pesos insumos (u) e produtos (v)
+ccr.out.dual <- dea.dual(insumos, produtos, RTS = "crs", ORIENTATION = "out") # problema dual output orientado
+names(ccr.out.dual)
+print(cbind("eff" = ccr.out.dual$eff, ccr.out.dual$u, ccr.out.dual$v), digits = 5)
+
+
+######## BCC Input Orientado #######
+# Em benchmarking modelo BCC (vrs) input orientado, o problema primal é a minimização do insumos dada a
+# quantidade de produtos. Modelo envoltório (que usa lambda), ver notação página 130 Ferreira e Gomes (2009)
+
+bcc.in <- dea(insumos, produtos, RTS = "vrs", ORIENTATION = "in", SLACK = TRUE) # eff BCC insumo orientado com folgas
+summary(bcc.in)
+lambda(bcc.in)
+lambda(bcc.in, KEEPREF = TRUE)
+print(bcc.in$eff, digits = 2)
+which(bcc.in$eff == 1 & !bcc.in$slack)
+data.frame("eff" = bcc.in$eff, "ins" = insumos, "rad" = bcc.in$eff * insumos, "fol" = bcc.in$sx, "alv" = insumos - bcc.in$sx)
+data.frame("eff" = bcc.in$eff, "ins" = produtos, "rad" = bcc.in$eff * produtos,"fol" = bcc.in$sy, "alv" = produtos + bcc.in$sy)
+
+## RENDIMENTOS DE ESCALA ## 
+# na saida do SAID, além dos pesos do CCR, tem v0 que corresponde ao k da abordagem de Coll e Blasco (2006)  
+bcc.in.irs <- dea(insumos, produtos, RTS = "irs", ORIENTATION = "in", SLACK = TRUE) # eff BCC ins orientado rend crescentes
+bcc.in.drs <- dea(insumos, produtos, RTS = "drs", ORIENTATION = "in", SLACK = TRUE) # eff BCC ins orientado rend decrescentes
+
+# Ferreira e Gomes (2009) página 198
+# CCR = BCC rendimentos constantes de escala
+# DRS = RVE rendimentos decrescentes, se DRS != RVE rendimentos crescentes
+# IRS = RVE rendimentos crescentes, se IRS != RVE rendimentos decrescentes 
+data.frame("CRS" = ccr.in$eff,"VRS"= bcc.in$eff, "IRS" = bcc.in.irs$eff, "DRS" = bcc.in.drs$eff, "E_ESC" = ccr.in$eff / bcc.in$eff,
+		   "REND" = ifelse(ccr.in$eff == bcc.in$eff | bcc.in$eff == bcc.in.irs$eff & bcc.in$eff == bcc.in.drs$eff, 
+						 "constante", ifelse(bcc.in$eff == bcc.in.drs$eff & bcc.in$eff != bcc.in.irs$eff, "decrescen", 
+											 "crescente")))
+# de modo equivalente pode - se fazer
+data.frame("CRS"= ccr.in$eff,"VRS"= bcc.in$eff, "IRS"= bcc.in.irs$eff, "DRS"= bcc.in.drs$eff, "E_ESC"= ccr.in$eff/bcc.in$eff,
+		   "REND"= ifelse(ccr.in$eff == bcc.in$eff | bcc.in$eff == bcc.in.irs$eff & bcc.in$eff == bcc.in.drs$eff, 
+						 "constante", ifelse(bcc.in$eff == bcc.in.irs$eff & bcc.in$eff != bcc.in.drs$eff, "crescente", 
+											 "decrescen")))
+
+# no problema dual do modelo BCC (vrs) insumos orientado [maximização] é expressa na forma multiplicada, onde os 
+# lambdas são substituidos pelos peso insumo (u) e peso produto (v). ver notação pág 117 Ferreira e Gomes (2009)
+bcc.in.dual <- dea.dual(insumos, produtos, RTS = "vrs", ORIENTATION = "in")
+names(bcc.in.dual)
+print(cbind("eff"= bcc.in.dual$eff, bcc.in.dual$u, bcc.in.dual$v), digits = 3)
+
+
+######## BCC Output Orientado #######
+# Em benchmarking modelo BCC (vrs) output orientado, o problema primal é a maximização do produto dada a
+# quantidade de insumos. Modelo envoltório (que usa lambda), ver notação página 118 Ferreira e Gomes (2009)
+bcc.out <- dea(insumos, produtos, RTS = "vrs", ORIENTATION = "out", SLACK = TRUE)
+summary(bcc.out)
+lambda(bcc.out)
+lambda(bcc.out, KEEPREF = TRUE)
+print(1/bcc.out$eff, digits = 2)
+which(1/bcc.out$eff == 1 & !bcc.out$slack)
+data.frame("eff"= 1/bcc.out$eff, "ins"= insumos, "rad"=(1/bcc.out$eff) * insumos,"fol"= bcc.out$sx, "alv"= insumos - bcc.in$sx)
+data.frame("eff"= 1/bcc.out$eff, "pro"= produtos, "rad"= 1/bcc.out$eff * produtos,"fol"= bcc.out$sy, "alv"= produtos + bcc.out$sy)
+
+bcc.out.irs <- dea(insumos, produtos, RTS = "irs", ORIENTATION = "out", SLACK = TRUE) # eff BCC out orientado rend crescentes
+bcc.out.drs <- dea(insumos, produtos, RTS = "drs", ORIENTATION = "out", SLACK = TRUE) # eff BCC out orientado rend decrescentes
+
+data.frame("CRS"= ccr.out$eff,"VRS"= bcc.out$eff, "IRS"= bcc.out.irs$eff, "DRS"= bcc.out.drs$eff,
+		   "E_ESC"= ccr.out$eff/bcc.out$eff, 
+		   "REND"= ifelse(ccr.out$eff == bcc.out$eff | bcc.out$eff == bcc.out.irs$eff & bcc.out$eff == bcc.out.drs$eff, 
+						 "constante", ifelse(bcc.out$eff == bcc.out.irs$eff & bcc.out$eff != bcc.out.drs$eff,"crescente","decrescen")))
+# de modo equivalente pode - se escrever
+data.frame("CRS"= ccr.out$eff,"VRS"= bcc.out$eff, "IRS"= bcc.out.irs$eff, "DRS"= bcc.out.drs$eff,
+		   "E_ESC"= ccr.out$eff/bcc.out$eff, 
+		   "REND"= ifelse(ccr.out$eff == bcc.out$eff | bcc.out$eff == bcc.out.irs$eff & bcc.out$eff == bcc.out.drs$eff, 
+						 "constante", ifelse(bcc.out$eff == bcc.out.drs$eff,"decrescen","crescente")))
+
+### CUIDADO!! quando exite diferença entre as variáves selecionadas, considerando muitas casa 
+### decimais, pode ocorrer equívocuo na análise de rendimentos de escala. para evitar esse erro é necessário 
+### limitar o número de casa decinais com a função round(x, digits = n)
+print(cbind("CRS"= ccr.out$eff, "VRS"= bcc.out$eff, "IRS"= bcc.out.irs$eff,"DRS"= bcc.out.drs$eff), digits = 18)
+ee <- data.frame(round((cbind("CRS"= ccr.out$eff, "VRS"= bcc.out$eff, "IRS"= bcc.out.irs$eff,"DRS"= bcc.out.drs$eff)), 
+					   digits = 6))
+data.frame(ee, "E_ESC"= ee$CRS/ee$VRS,"REND"= ifelse(ee$CRS == ee$VRS | ee$VRS == ee$IRS & ee$VRS == ee$DRS, 
+												   "constante", ifelse(ee$VRS == ee$IRS & ee$VRS != ee$DRS,"crescente","decrescen")))
+
+# o problema dual BCC (vrs) output orientado é de minimização, na forma multiplicada que considera os pesos dos 
+# insumos (u) e produtos (v)
+bcc.out.dual <- dea.dual(insumos, produtos, RTS = "vrs", ORIENTATION = "out") # problema dual
+names(bcc.out.dual)
+print(cbind("eff"= bcc.out.dual$eff, bcc.out.dual$u, bcc.out.dual$v), digits = 5)
+
+
+######## Análise de Supereficiência #######
+# ver Coll e Blasco (2006) capítulo 4 página 135
+# ver Ferreira e Gomes (2009) capítulo 4 página 136
+s.ccr.in <- sdea(insumos, produtos, RTS = "crs", ORIENTATION = "in")
+data.frame("CRS"= ccr.in$eff, "CCR_SUPER"= s.ccr.in$eff)
+
+s.ccr.out <- sdea(insumos, produtos, RTS = "crs", ORIENTATION = "out")
+data.frame("CCR"= 1/ccr.out$eff, "CCR_SUPER"= 1/s.ccr.out$eff)
+
+######## Modelo FHD #######
+# ver Ferreira e Gomes (2009) capítulo 4 página 143
+bcc.in.fhd <- dea(insumos, produtos, RTS = "fdh", ORIENTATION = "in")
+data.frame("CRS"= ccr.in$eff,"VRS"= bcc.in$eff, "IRS"= bcc.in.irs$eff, "DRS"= bcc.in.drs$eff, "FHD"= bcc.in.fhd$eff)
+
+bcc.out.fhd <- dea(insumos, produtos, RTS = "fdh", ORIENTATION = "out")
+data.frame("CRS"= 1/ccr.out$eff,"VRS"= 1/bcc.out$eff, "IRS"= 1/bcc.out.irs$eff, "DRS"= 1/bcc.out.drs$eff, 
+		   "FHD"= 1/bcc.out.fhd$eff)
+
+######## Seleção de variáveis ########
+cor(coll.blasco, use = "all.obs", method = c("spearman")) # teste de correlação de Spearman
+cor(coll.blasco, use = "all.obs", method = c("kendall")) # teste de correlação de Kendall
+cor(coll.blasco, use = "all.obs", method = c("pearson")) # teste de correlação de Pearson
+
+
+######## Eficiência custo (econômica), alocativa, receita e lucro #######
+# ver Ferreira e Gomes (2009) capítulo 5 página 213
+ins <- data.frame(insumos)
+p.ins <- data.frame("px1"= c(2,2,2,2,2,2), "px2"= c(6,4,3,4,3,2))
+eff.cost <- cost.opt(ins, produtos, p.ins, RTS = "vrs")
+print(cbind(ins, p.ins,
+"custo_min"= eff.cost$cost, 
+"eff_econ"= eff.cost$cost/ (ins$x1 * p.ins$px1 + ins$x2 * p.ins$px2), 
+"eff_tec"= bcc.in$eff, 
+"eff_aloc"=(eff.cost$cost/ (ins$x1 * p.ins$px1 + ins$x2 * p.ins$px2))/bcc.in$eff), digits = 3)
+
+pro <- data.frame(produtos)
+p.pro <- matrix(1, nrow = dim(pro)[1], ncol = 2)
+eff.renevue <- revenue.opt(ins, pro, p.pro, RTS = "vrs")
+eff.profit <- profit.opt(ins, pro, p.ins, p.ins, RTS = "vrs")
+```

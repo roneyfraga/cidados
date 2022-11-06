@@ -1,0 +1,203 @@
+
+# Um bilhão
+
+Teste de velocidade para calcular de 1 até 1 bilhão, a partir do R.
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+
+options(scipen = 999)
+knitr::knit_engines$set(julia = JuliaCall::eng_juliacall)
+```
+
+## R
+
+```{r}
+#| eval: false
+#| echo: true 
+
+library(tictoc)
+
+sum_until_r <- function(numero = 10) {
+    n <- 0
+    while (n < numero) 
+        n <- n + 1 
+    n
+}
+
+tictoc::tic()
+sum_until_r(1000000000)
+tictoc::toc()
+```
+
+> 21.264 sec elapsed
+
+## Python from Reticulate
+
+```{r}
+#| eval: false
+#| echo: true 
+#| warning: false
+
+library(reticulate) 
+
+tictoc::tic()
+py_run_string("
+n = 0
+while(n < 1000000000):
+    n+=1
+
+print(n)
+")
+tictoc::toc()
+```
+
+> 48.923 sec elapsed
+
+## Python
+
+```{python}
+#| eval: false
+#| echo: true 
+
+# open python console in vim or rstudio 
+# reticulate::repl_python()
+
+import time
+
+def sum_until_py(numero = 10):
+    n = 0
+    while(n < numero):
+        n+=1
+    return n
+
+tic = time.perf_counter()
+sum_until_py(1000000000)
+toc = time.perf_counter()
+
+print(toc - tic, 'secs')
+```
+
+> 25.6930 secs
+
+## Python source 
+
+```{r}
+#| eval: false
+#| echo: true 
+#| warning: false
+
+reticulate::source_python('code/um_bilhao.py')
+
+tictoc::tic()
+sum_until_py(1000000000)
+tictoc::toc()
+```
+
+> 37.102 sec elapsed
+
+
+## Julia from JuliaCall 
+
+```{r}
+#| eval: false
+#| echo: true
+#| warning: false
+
+library(JuliaCall) 
+julia <- julia_setup()
+
+julia_command("
+function sum_until_jl(numero) 
+i = 0
+while i <= numero
+    i += 1
+end
+end", show_value = F)
+
+tictoc::tic()
+julia_command("sum_until_jl(1000000000)")
+tictoc::toc()
+```
+
+> 0.001 sec elapsed
+
+## Julia  
+
+```{julia}
+#| eval: false
+#| echo: true
+#| warning: false
+
+# open julia console in vim or rstudio 
+# julia_console()
+
+@time begin
+njl = 0;
+while njl <= 1000000000
+    global njl += 1
+end
+end
+```
+
+> 272.569 seconds (1000.00 M allocations: 14.901 GiB, 0.15% gc time)
+
+## Julia source
+
+```{r}
+#| eval: false
+#| echo: true
+#| warning: false
+
+julia_source('code/um_bilhao.jl')
+
+tictoc::tic()
+julia_call('sum_until_jl', 1000000000)
+tictoc::toc()
+```
+
+> 1.158 sec elapsed
+
+
+## C++ via Rcpp
+
+```{r}
+#| eval: false
+#| echo: true
+
+library(Rcpp)
+
+cppFunction("
+int sum_until_cpp(int numero) { 
+    int n = 0; 
+    while (n < numero)
+        n++;
+    return n;
+}
+")
+
+tictoc::tic()
+sum_until_cpp(1000000000)
+tictoc::toc()
+```
+
+> 0.001 sec elapsed
+
+## C++ via Rcpp source
+
+```{r}
+#| eval: false
+#| echo: true
+
+sourceCpp('code/um_bilhao.cpp')
+
+tictoc::tic()
+sum_until_v2_cpp(1000000000)
+tictoc::toc()
+```
+
+> 0.001 sec elapsed
+
+

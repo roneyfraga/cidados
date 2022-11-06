@@ -1,0 +1,14 @@
+{
+  "hash": "61e2f7d5d3f9a512dc8637995ed64234",
+  "result": {
+    "markdown": "\n# `DiagrammeR`\n\nDiagrama da antiga redes de computadores.\n\n`Rworkspace/DiagrammeR`\n\n\n::: {.cell filename='rede-computadores.R'}\n\n```{.r .cell-code  code-fold=\"show\"}\nlibrary(DiagrammeR)\n\ngrViz(\"\n      \n digraph boxes_and_circles {\n\n  graph [layout=dot]\n\n  node [shape = box, fontname = Helvetica]\n  MacbookPro15 [label='Desenvolvimento \\n MacbookPro15 \\n macOS \\n i7, ssh 256 gb, 16 gb ram'];\n  MacbookPro13 [label='Desenvolvimento \\n MacbookPro13 \\n macOS \\n i7, ssh 256 gb + hd 750 gb, 16 gb ram']\n  \n  node [shape = diamond, fontname = Helvetica]\n  RaspberryPi [label='Segurança de Rede \\n rpi \\n raspbian \\n Raspberry Pi 2']\n  \n  node [shape = oval, fontname = Helvetica]\n  Frank[label='Produção \\n frank \\n openSUSE \\n  i7, ssh 256 gb, 32 gb ram'];\n  Fusca [label='Produção \\n fusca \\n openSUSE \\n i7, hd 1 tb, 16 gb ram']\n  \n  node [shape = egg, fontname = Helvetica]\n  Nas [label='Servidor de Dados \\n nas \\n FreeNAS \\n i3, 8 gb ram, 3 hds 2 tb em raidz']\n  \n  node [shape = square, fontname = Helvetica]\n  Ubuntu_NYC [label='Servidor de Web \\n ubuntu_nyc \\n Ubuntu \\n sob demanda \\n DigitalOcean']\n\n  # edges\n  # ssh\n  MacbookPro15->RaspberryPi [label='ssh',color='navy']\n  MacbookPro13->RaspberryPi [label='ssh',color='navy']\n  RaspberryPi->Frank [label='ssh',color='navy']\n  RaspberryPi->Fusca [label='ssh',color='navy']\n  MacbookPro15->Ubuntu_NYC [label='ssh',color='navy']\n  MacbookPro13->Ubuntu_NYC [label='ssh',color='navy']\n  # scp\n  Frank->Ubuntu_NYC [label='scp',color='DeepSkyBlue', penwidth=.7]\n  # nas\n  Frank->Nas [label='smb',arrowhead = inv, color=RoyalBlue, penwidth=.7]\n  Fusca->Nas [label='smb',arrowhead = inv, color=RoyalBlue, penwidth=.7]\n  MacbookPro15->Nas [label='afp',arrowhead = inv, color=RoyalBlue, penwidth=.7]\n  # dropbox\n  MacbookPro15->MacbookPro13 [label='dropbox',arrowhead = none, color=MediumTurquoise, penwidth=.7]\n  MacbookPro15->Frank [label='dropbox',arrowhead = none, color=MediumTurquoise, penwidth=.7]\n  MacbookPro13->Fusca [label='dropbox',arrowhead = none, color=MediumTurquoise, penwidth=.7]\n  Frank->Fusca [label='dropbox',arrowhead = none, color=MediumTurquoise, penwidth=.7]\n  Frank->Ubuntu_NYC [label='dropbox',arrowhead = none, color=MediumTurquoise, penwidth=.7]\n  Fusca->Ubuntu_NYC [label='dropbox',arrowhead = none, color=MediumTurquoise, penwidth=.7]\n}\n      \n\")\n```\n:::\n\n\n![](images/diagrammerR.png)\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

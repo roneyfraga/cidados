@@ -1,0 +1,463 @@
+---
+title: "Segundo documento"
+date: "`r Sys.time()`"
+date-format: iso 
+author:
+  - name: Roney Fraga Souza
+    affiliations:
+      - name: Universidade Federal de Mato Grosso
+  - name: Nome do Segundo Autor
+    affiliations:
+      - name: Universidade Federal de Algum Lugar
+format: 
+  html:
+      toc: true
+      toc-location: right
+      preper-html: true 
+      fig-width: 8 
+      fig-height: 4 
+      code-fold: true
+      theme: solar
+      code-line-numbers: true
+  revealjs: 
+    slide-number: true
+    chalkboard: 
+      buttons: true
+  pdf:
+    documentclass: article
+    papersize: a4
+    lof: false
+    lot: false
+    toc: true
+    code-line-numbers: true
+    highlight-style: tango
+    colorlinks: true
+    geometry:
+      - top=30mm
+      - left=20mm
+      - heightrounded
+  docx:
+    toc: true
+    number-sections: true
+    highlight-style: github
+    reference-doc: template-ms-word.docx
+    prefer-html: true
+lang: pt
+bibliography: references.bib
+csl: abnt-ipea.csl
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Rodando Código
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+## R -- código e figura
+
+@fig-airquality further explores the impact of temperature on ozone level.
+
+```{r}
+#| label: fig-airquality
+#| fig-cap: Temperature and ozone level.
+#| warning: false
+
+library(ggplot2)
+
+ggplot(airquality, aes(Temp, Ozone)) + 
+  geom_point() + 
+  geom_smooth(method = "loess"
+)
+```
+
+## Figura no markdown
+
+![Fatu and Najin](images/whiterhino-fatu-najin.jpg){#fig-fatu}
+
+Cross reference with @fig-fatu, more details in <https://quarto.org/docs/authoring/figures.html>.
+
+## Tabelas Markdown
+
+| Default | Left | Right | Center |
+|---------|:-----|------:|:------:|
+| 12      | 12   |    12 |   12   |
+| 123     | 123  |   123 |  123   |
+| 1       | 1    |     1 |   1    |
+
+: Demonstration of pipe table syntax {#tbl-markdown}
+
+Cross reference as @tbl-markdown.
+
+## Tabelas -- `knitr`
+
+Cross-reference with @tbl-example.
+
+```{r}
+#| label: tbl-example
+#| tbl-cap: "Example"
+#| tbl-subcap: 
+#|   - "Cars"
+#|   - "Pressure"
+#| layout-ncol: 2
+#| echo: fenced
+
+library(knitr)
+kable(head(cars))
+kable(head(pressure))
+```
+
+## Tabelas -- `DT`
+
+[DT](https://rstudio.github.io/DT)
+
+```{r}
+#| label: DT-default
+#| tbl-cap: "DT::datatable() default"
+
+mtcars |>
+    tibble::rownames_to_column(var = 'car') |>
+    dplyr::select(1:5) |> 
+    DT::datatable()
+```
+
+## Tabelas -- `DT` download
+
+[DT](https://rstudio.github.io/DT)
+
+```{r}
+#| label: DT-download
+#| tbl-cap: "DT::datatable download option enabled"
+
+mtcars |>
+    tibble::rownames_to_column(var = 'car') |>
+    dplyr::select(1:5) |> 
+    DT::datatable(extensions = 'Buttons', rownames = F, 
+                  options = list(
+                        dom = 'Bfrtip', 
+                        pageLength = 5, 
+                        buttons = list(list(
+                                            extend = 'collection', 
+                                            buttons = list(list(extend = 'csv', filename = 'data'), 
+                                                            list(extend = 'excel', filename = 'data')), 
+                                                            text = 'Download'))))  
+
+```
+
+## Tabelas -- `gt`
+
+Opção a ser analisada [gt](https://gt.rstudio.com).
+
+```{r}
+#| label: gt-tables
+#| tbl-cap: "gt tables"
+#| warning: false
+library(gt)
+library(tidyverse)
+library(glue)
+
+# Define the start and end dates for the data range
+start_date <- "2010-06-07"
+end_date <- "2010-06-14"
+
+# Create a gt table based on preprocessed
+# `sp500` table data
+sp500 %>%
+  filter(date >= start_date & date <= end_date) %>%
+  select(-adj_close) %>%
+  gt() %>%
+  tab_header(
+    title = "S&P 500",
+    subtitle = glue("{start_date} to {end_date}")
+  ) %>%
+  fmt_date(
+    columns = date,
+    date_style = 3
+  ) %>%
+  fmt_currency(
+    columns = c(open, high, low, close),
+    currency = "USD"
+  ) %>%
+  fmt_number(
+    columns = volume,
+    suffixing = TRUE
+  )
+```
+
+## Tabelas -- `gtsummary`
+
+Opção a ser analisada [gtsummary](https://www.danieldsjoberg.com/gtsummary/).
+
+```{r}
+#| label: gtsummary-tables
+#| tbl-cap: "gtsummary tables"
+#| warning: false
+library(gtsummary)
+# make dataset with a few variables to summarize
+trial2 <- trial %>% select(age, grade, response, trt)
+
+# summarize the data with our package
+tbl_summary(trial2)
+```
+
+```{r}
+#| label: gtsummary-tables-2
+#| tbl-cap: "gtsummary tables 2"
+#| warning: false
+tbl_summary(
+    trial2,
+    by = trt, # split table by group
+    missing = "no" # don't list missing data separately
+  ) %>%
+  add_n() %>% # add column with total number of non-missing observations
+  add_p() %>% # test for a difference between groups
+  modify_header(label = "**Variable**") %>% # update the column header
+  bold_labels() 
+```
+
+## Regressão -- `gtsummary`
+
+```{r}
+#| label: gtsummary-tables-regressao
+#| tbl-cap: "gtsummary regressão"
+#| warning: false
+mod1 <- glm(response ~ trt + age + grade, trial, family = binomial)
+t1 <- tbl_regression(mod1, exponentiate = TRUE)
+t1
+```
+
+## Regressão lado a lado -- `gtsummary`
+
+```{r}
+#| label: gtsummary-tables-regressao-2
+#| tbl-cap: "gtsummary regressão lado a lado"
+#| warning: false
+library(survival)
+
+# build survival model table
+t2 <-
+  coxph(Surv(ttdeath, death) ~ trt + grade + age, trial) %>%
+  tbl_regression(exponentiate = TRUE)
+
+# merge tables 
+tbl_merge(
+    tbls = list(t1, t2),
+    tab_spanner = c("**Tumor Response**", "**Time to Death**")
+  )
+```
+
+## Regressão -- `sjPlot`
+
+[sjPlot](https://strengejacke.github.io/sjPlot)
+
+```{r}
+#| label: sjPlot-tables-regressao
+#| tbl-cap: "sjPlot regressão"
+#| warning: false
+library(sjPlot)
+library(sjlabelled)
+library(sjmisc)
+library(ggplot2)
+
+data(efc)
+theme_set(theme_sjplot())
+
+y <- ifelse(efc$neg_c_7 < median(na.omit(efc$neg_c_7)), 0, 1)
+
+# create data frame for fitting model
+df <- data.frame(
+  y = to_factor(y),
+  sex = to_factor(efc$c161sex),
+  dep = to_factor(efc$e42dep),
+  barthel = efc$barthtot,
+  education = to_factor(efc$c172code)
+)
+
+# set variable label for response
+set_label(df$y) <- "High Negative Impact"
+
+# fit model
+m1 <- glm(y ~., data = df, family = binomial(link = "logit"))
+tab_model(m1)
+```
+
+## Regressão -- `sjPlot` gráficos
+
+[sjPlot](https://strengejacke.github.io/sjPlot)
+
+```{r}
+#| label: fig-sjPlot1
+#| fig-cap: "sjPlot opção de saída de regressão"
+#| warning: false
+plot_model(m1, show.values = TRUE, value.offset = .3)
+```
+
+```{r}
+#| label: fig-sjPlot2
+#| fig-cap: "sjPlot opção de saída de regressão"
+#| warning: false
+plot_model(
+  m1, 
+  colors = "Accent", 
+  show.values = TRUE,
+  value.offset = .4,
+  value.size = 4,
+  dot.size = 3,
+  line.size = 1.5,
+  vline.color = "blue",
+  width = 1.5
+)
+```
+
+## Diagramas
+
+```{mermaid}
+flowchart LR
+  A[Hard edge] --> B(Round edge)
+  B --> C{Decision}
+  C --> D[Result one]
+  C --> E[Result two]
+```
+
+## Citações
+
+Citação direta: @lee2009, @penin2018, @arnold2015.
+
+Citação indireta [@lee2009; @penin2018; @arnold2015].
+
+Texto entre parênteses [see @lee2009, pp. 33-35; also @arnold2015, chap. 1].
+
+Nome do autor e ano [-@arnold2015].
+
+Citar uma tabela ou figura com: @fig-fatu, [Fig @fig-fatu], ou [-@fig-fatu].
+
+## Notas de rodapé
+
+Here is a footnote reference,[^1] and another.[^2]
+
+[^1]: Here is the footnote.
+
+[^2]: Here's one with multiple blocks.
+
+Here is an inline note.[^3]
+
+[^3]: Inlines notes are easier to write, since you don't have to pick an identifier and move down to type the note.
+
+## Equações
+
+Black-Scholes (@eq-black-scholes) is a mathematical model that seeks to explain the behavior of financial derivatives, most commonly options:
+
+$$
+\frac{\partial \mathrm C}{ \partial \mathrm t } + \frac{1}{2}\sigma^{2} \mathrm S^{2}
+\frac{\partial^{2} \mathrm C}{\partial \mathrm C^2}
+  + \mathrm r \mathrm S \frac{\partial \mathrm C}{\partial \mathrm S}\ =
+  \mathrm r \mathrm C 
+$$ {#eq-black-scholes}
+
+
+## Código de Python
+
+Obs.: necessário ter `Python` instalado, assim como, os pacotes `numpy` e `matplotlib`. Se tiver Python e Julia instalados, altere '|# eval:' e '|# include:' para 'true'.
+
+For a demonstration of a line plot on a polar axis.
+
+```{python}
+#| label: fig-polar
+#| fig-cap: "A line plot on a polar axis"
+#| eval: false
+#| echo: true
+#| code-fold: false
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+r = np.arange(0, 2, 0.01)
+theta = 2 * np.pi * r
+fig, ax = plt.subplots(
+  subplot_kw = {'projection': 'polar'} 
+)
+ax.plot(theta, r)
+ax.set_rticks([0.5, 1, 1.5, 2])
+ax.grid(True)
+plt.show()
+```
+
+## Código de Julia
+
+Obs.: necessário ter `Julia` instalada, assim como, o pacote `Plots`.
+
+Plot function pair (x(u), y(u)).
+
+```{julia}
+#| label: fig-parametric
+#| fig-cap: "Parametric Plots"
+#| eval: false
+#| echo: true
+#| code-fold: false
+
+using Plots
+
+plot(sin, 
+     x->sin(2x), 
+     0, 
+     2π, 
+     leg=false, 
+     fill=(0,:lavender))
+```
+
+## Código de C++
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-fold: false
+
+library(Rcpp)
+
+# Define the function euclidean_distance()
+cppFunction('
+  double euclidean_distance(double x, double y) {
+    return sqrt(x*x + y*y) ;
+  }
+')
+
+# Calculate the euclidean distance
+euclidean_distance(1.5, 2.5)
+```
+
+## Referências
+
+::: {#refs}
+:::
+
+<!--
+comentários aqui
+
+eval        Evaluate the code chunk (if false, just echos the code into the output).
+echo        Include the source code in output
+output      Include the results of executing the code in the output (true, false, or asis to indicate that the output is raw markdown and should not have any of Quarto’s standard enclosing markdown).
+warning     Include warnings in the output.
+error       Include errors in the output (note that this implies that errors executing code will not halt processing of the document).
+include     Catch all for preventing any output (code or results) from being included (e.g. include: false suppresses all output from the code block).
+
+testar com:
+#| echo: true
+#| eval: true
+#| include: true
+
+-->

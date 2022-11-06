@@ -1,0 +1,67 @@
+
+# Tabela binária
+
+- gera tabela binária para `n` dimensões
+
+`Rworkspace/2020_Henrique-Roge`
+
+```{r filename='henrique.R'}
+#| eval: false
+#| echo: true
+#| code-fold: show
+
+# escolher o número de variáveis
+# nvar = número de variáveis
+nvar  <- 14
+
+# nao precisa alterar a partir daqui
+lst <- lapply(numeric(nvar), function(x) c(0, 1))
+m <- as.matrix(expand.grid(lst))
+m
+
+# ordenar as linhas
+ordenar <- data.frame(somalinha = rowsums(m), id = 1:nrow(m))
+ordenar <- ordenar[order(ordenar$somalinha), ]
+m <- m[ordenar$id, ]
+m
+
+# função para encontrar as combinações de determinada sequência
+# comb(5,2)     # ex.: em 5 números 2 combinações
+comb = function(n, x) {
+  factorial(n) / factorial(n - x) / factorial(x)
+}
+
+cb <- null
+
+for(i in seq_along(m[1,])) {
+  cb[[i]] <- comb(ncol(m), i)
+}
+
+cb <- unlist(cb)
+cb <- c(cb[length(cb)], cb)
+cb
+
+res <- null
+
+for(i in seq_along(cb)) {
+
+  if(i == 1) {
+
+    res[[1]] <- m[1, ]
+
+  }else{
+
+    final <- sum(cb[1:i])
+    inicio <- (sum(cb[1:i]) + 1) - cb[i]
+
+    res[[i]] <- m[inicio:final, ]
+
+  }
+}
+
+
+for(i in seq(res)) {
+  write.csv(data.frame(res[[i]]), file = paste0('binaryprobmatrix_', 'nvar_', nvar, '_comb_', i, '.csv'), row.names = f)
+}
+```
+

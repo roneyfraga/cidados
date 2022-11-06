@@ -1,0 +1,64 @@
+
+# `DiagrammeR`
+
+Diagrama da antiga redes de computadores.
+
+`Rworkspace/DiagrammeR`
+
+```{r filename='rede-computadores.R'}
+#| eval: false 
+#| echo: true
+#| code-fold: show
+
+library(DiagrammeR)
+
+grViz("
+      
+ digraph boxes_and_circles {
+
+  graph [layout=dot]
+
+  node [shape = box, fontname = Helvetica]
+  MacbookPro15 [label='Desenvolvimento \n MacbookPro15 \n macOS \n i7, ssh 256 gb, 16 gb ram'];
+  MacbookPro13 [label='Desenvolvimento \n MacbookPro13 \n macOS \n i7, ssh 256 gb + hd 750 gb, 16 gb ram']
+  
+  node [shape = diamond, fontname = Helvetica]
+  RaspberryPi [label='Segurança de Rede \n rpi \n raspbian \n Raspberry Pi 2']
+  
+  node [shape = oval, fontname = Helvetica]
+  Frank[label='Produção \n frank \n openSUSE \n  i7, ssh 256 gb, 32 gb ram'];
+  Fusca [label='Produção \n fusca \n openSUSE \n i7, hd 1 tb, 16 gb ram']
+  
+  node [shape = egg, fontname = Helvetica]
+  Nas [label='Servidor de Dados \n nas \n FreeNAS \n i3, 8 gb ram, 3 hds 2 tb em raidz']
+  
+  node [shape = square, fontname = Helvetica]
+  Ubuntu_NYC [label='Servidor de Web \n ubuntu_nyc \n Ubuntu \n sob demanda \n DigitalOcean']
+
+  # edges
+  # ssh
+  MacbookPro15->RaspberryPi [label='ssh',color='navy']
+  MacbookPro13->RaspberryPi [label='ssh',color='navy']
+  RaspberryPi->Frank [label='ssh',color='navy']
+  RaspberryPi->Fusca [label='ssh',color='navy']
+  MacbookPro15->Ubuntu_NYC [label='ssh',color='navy']
+  MacbookPro13->Ubuntu_NYC [label='ssh',color='navy']
+  # scp
+  Frank->Ubuntu_NYC [label='scp',color='DeepSkyBlue', penwidth=.7]
+  # nas
+  Frank->Nas [label='smb',arrowhead = inv, color=RoyalBlue, penwidth=.7]
+  Fusca->Nas [label='smb',arrowhead = inv, color=RoyalBlue, penwidth=.7]
+  MacbookPro15->Nas [label='afp',arrowhead = inv, color=RoyalBlue, penwidth=.7]
+  # dropbox
+  MacbookPro15->MacbookPro13 [label='dropbox',arrowhead = none, color=MediumTurquoise, penwidth=.7]
+  MacbookPro15->Frank [label='dropbox',arrowhead = none, color=MediumTurquoise, penwidth=.7]
+  MacbookPro13->Fusca [label='dropbox',arrowhead = none, color=MediumTurquoise, penwidth=.7]
+  Frank->Fusca [label='dropbox',arrowhead = none, color=MediumTurquoise, penwidth=.7]
+  Frank->Ubuntu_NYC [label='dropbox',arrowhead = none, color=MediumTurquoise, penwidth=.7]
+  Fusca->Ubuntu_NYC [label='dropbox',arrowhead = none, color=MediumTurquoise, penwidth=.7]
+}
+      
+")
+```
+
+![](images/diagrammerR.png)

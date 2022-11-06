@@ -1,0 +1,80 @@
+project:
+  type: book
+  output-dir: _book
+  preview:
+    port: 5555
+    browser: false
+
+book:
+  title: "ciência de dados"
+  author:
+    - name: Roney Fraga Souza
+      affiliations:
+        - name: Universidade Federal de Mato Grosso
+  date: "today"
+  date-format: iso 
+  search: true
+  site-url: https:roneyfraga.com/cidados
+  repo-url: https://github.com/roneyfraga/cidados
+  chapters:
+    - index.qmd
+
+    - part: r.qmd 
+      chapters:
+        - r-introducao.qmd
+        - r-objetos.qmd
+        - r-tidyverse.qmd
+        - r-graficos.qmd
+        - r-data.table.qmd
+        - r-quarto.qmd
+
+    - part: julia.qmd
+      chapters:
+        - julia-introducao.qmd
+
+    - part: python.qmd
+      chapters:
+        - python-introducao.qmd
+        - python-pandas-numpy.qmd
+        # - python-networks.qmd
+
+    # - part: redes.qmd
+        # tidygraph
+        # ggraph
+        # bipartite (diretório já existe)
+        
+    # - part: analise-de-texto.qmd
+        # tidytext
+        # processamento de linguagem natural
+        # structutal topic modeling 
+
+    - part: projetos.qmd
+      chapters:
+        - projeto-um-bilhao.qmd
+        - projeto-ojs-downloader.qmd
+        - projeto-wos-downloader.qmd
+        - projeto-json-map.qmd
+        - projeto-flexdashboard.qmd
+        - projeto-dicionario-sinonimos.qmd
+        - projeto-tabela-binaria.qmd
+        - projeto-res-ping.qmd
+        - projeto-leitura-ris.qmd
+        - projeto-diagrama.qmd
+        - projeto-dea.qmd
+
+    - references.qmd
+
+lang: pt
+bibliography: references.bib
+csl: abnt-ipea.csl
+
+format:
+  html:
+    theme: 
+      light: flatly
+      dark: darkly
+    toc-location: right
+    code-fold: show
+    code-line-numbers: true
+    author-meta: "Roney Fraga Souza"
+

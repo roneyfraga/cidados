@@ -1,0 +1,36 @@
+
+# R {.unnumbered}
+
+- Material introdutório de programação em R (@aquino2014,  @grolemund2014, @peng2016)
+
+- Material intermediário de programação em R (@wickham2016r4ds)
+
+- Material avançado de programação em R (@wickham2019advanced, e @gillespie2016)
+
+- Material sobre relatórios (html, pdf, docx e epub) no R (@xie2016bookdown, @xie2017blogdown, e @xie2018rmarkdown)
+  - <https://quarto.org> é a atualiação dos possibilidades anteriores de relatórios.
+
+- Material sobre Gráficos (@wickham2016data, @wickham2016r4ds, @chang2018rgraphics)
+
+- Material sobre Redes ([Ognyanova (2019)](https://kateto.net/network-visualization), @luke2015, e @kolaczyk2014)
+
+- Material sobre Bibliometria (@aria2017)
+
+- Material sobre Econometria (@hanck2019)
+
+- Material sobre Microdados (@trovao2022pnadc)
+
+## Bibliografia Básica {-}
+
+- @aquino2014, @grolemund2014, @wickham2016r4ds, @xie2016bookdown
+
+- Livros úteis [https://bookdown.org](https://bookdown.org/).
+
+## Contato {-}
+
+e-mail: `roneyfraga@gmail.com` 
+
+## Baixar códigos {-}
+
+<https://www.github.com/roneyfraga/cidados>
+

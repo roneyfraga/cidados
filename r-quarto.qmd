@@ -1,0 +1,32 @@
+
+# Relatórios com `quarto`
+
+O `quarto` substituiu os pacotes `rmarkdown`, `bookdown`, `blogdown`, etc. 
+
+<https://quarto.org>
+
+## Apresentação
+
+[![](images/quarto-ex-revealjs.png){ width=75% }](https://roneyfraga.com/projects/quarto-ex-revealjs)
+
+Gerado com <https://github.com/roneyfraga/cidados/quarto-ex-revealjs/>.
+
+## Documento html
+
+[![](images/quarto-ex-html.png){ width=75% }](https://roneyfraga.com/projects/quarto-ex-html)
+
+## Modelo de artigo em pdf
+
+Para carregar o template:
+
+`quarto use template quarto-journals/elsevier`
+
+Gerado com <https://github.com/roneyfraga/cidados/quarto-ex-artigo/>.
+
+<embed src="files/artigo_1.pdf" width="100%" height="550">
+
+## Mode MS Word
+
+Ver <https://github.com/roneyfraga/cidados/quarto-ex-docx/>.
+
+

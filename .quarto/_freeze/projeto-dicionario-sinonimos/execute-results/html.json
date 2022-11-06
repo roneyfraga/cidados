@@ -1,0 +1,14 @@
+{
+  "hash": "1be50d4535cf419e26e5af5277afce34",
+  "result": {
+    "markdown": "\n# Dicionário de sinônimos\n\n\n::: {.cell filename='dicsyn.R'}\n\n```{.r .cell-code}\n#!/usr/bin/env Rscript\n\n# do\n# chmod +x dicsyn.R\n# run\n# ./dicsyn.R idioma termo\n\n# or add to ~/.zshrc an alias to dicsyn.R\n\nsuppressMessages(library(rvest))\nsuppressMessages(library(stringr))\nsuppressMessages(library(pipeR))\n\nurl <- 'https://sinonimos.woxikon.com.br'\n\n# receber o comando do terminal\nargs <- commandArgs(TRUE)\n\n# test if there is at least one argument: if not, return an error\nif (length(args) < 2) {\n\n    stop(\"Please specify valid language (pt, en, fr, it, ...) and a search term..\\n\", call. = FALSE)\n\n} else if (!(args[1] %in% c('pt', 'en', 'be', 'cl', 'co', 'br', 'nz', 'uk', 'fr', 'it', 'sv'))) {\n\n    stop(\"Specify a valid language.\n            Portuguese: 'pt'\n            English: 'en'\n            French: 'fr',\n            Italian: 'it'\n            etc.\\n\", call. = FALSE)\n\n} else {\n\n    page = read_html(paste(url, args[1], args[2], sep = '/'))\n    \n    # primeiro sinônimo\n    html_nodes(page, xpath = '//*[@id=\"content\"]/div[3]/div/div/div[2]/div/div[3]/ol/li/div') %>>% \n        html_text() %>>% \n        (gsub('^.*:|\\\\n', '', .)) %>>% \n        (trimws(., which = 'both', whitespace = \"[ \\t\\r\\n]\"))  %>>% \n        (strsplit(., split = \" +\")) %>>% \n        (. -> a)\n    \n    # todos, exceto o primeiro sinônimo\n    html_nodes(page, xpath = '//*[@id=\"content\"]/ol/li[*]') %>>% \n        html_text() %>>% \n        (gsub('^.*:|\\\\n', '', .)) %>>% \n        (trimws(., which = 'both', whitespace = \"[ \\t\\r\\n]\"))  %>>% \n        (strsplit(., split = \" +\")) %>>% \n        (. -> b)\n    \n    termos <- append(a, b)\n    \n    b <- lapply(termos, function(x) { \n                    paste(x[1], str_c(x[2:length(x)], collapse = \", \"), sep = ': ')\n    }) \n    \n    names(b) <- NULL\n    unlist(b)\n}\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

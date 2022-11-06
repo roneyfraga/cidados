@@ -1,0 +1,131 @@
+{
+  "index.qmd": {
+    "index.html": "ba720018"
+  },
+  "intro.qmd": {
+    "intro.html": "ec07a29c"
+  },
+  "summary.qmd": {
+    "summary.html": "64d686b8"
+  },
+  "references.qmd": {
+    "references.html": "8ec949f2"
+  },
+  "r-01.qmd": {
+    "r-01.html": "009fb70b"
+  },
+  "r-02.qmd": {
+    "r-02.html": "b6754a32"
+  },
+  "r-03.qmd": {
+    "r-03.html": "2975a380"
+  },
+  "r-04.qmd": {
+    "r-04.html": "0a032959"
+  },
+  "r-05.qmd": {
+    "r-05.html": "dd5c4593"
+  },
+  "julia.qmd": {
+    "julia.html": "5bb180f7"
+  },
+  "python.qmd": {
+    "python.html": "8bab0490"
+  },
+  "r-06.qmd": {
+    "r-06.html": "5a028466"
+  },
+  "r.qmd": {
+    "r.html": "11192edb"
+  },
+  "cpp.qmd": {
+    "cpp.html": "76ecd1ae"
+  },
+  "julia-01.qmd": {
+    "julia-01.html": "40bf5284"
+  },
+  "python-01.qmd": {
+    "python-01.html": "c62fd5ce"
+  },
+  "r-introducao.qmd": {
+    "r-introducao.html": "2647881a"
+  },
+  "r-objetos.qmd": {
+    "r-objetos.html": "6844ddc9"
+  },
+  "r-tidyverse.qmd": {
+    "r-tidyverse.html": "d3682015"
+  },
+  "r-graficos.qmd": {
+    "r-graficos.html": "37d2625c"
+  },
+  "r-data.table.qmd": {
+    "r-data.table.html": "6e0c4064"
+  },
+  "r-quarto.qmd": {
+    "r-quarto.html": "f9a9c8d0"
+  },
+  "curiosidades.qmd": {
+    "curiosidades.html": "ad69c2fe"
+  },
+  "cur-um-bilhao.qmd": {
+    "cur-um-bilhao.html": "52bdd094"
+  },
+  "diversos.qmd": {
+    "diversos.html": "1dcef996"
+  },
+  "div-um-bilhao.qmd": {
+    "div-um-bilhao.html": "4d3791e7"
+  },
+  "projetos.qmd": {
+    "projetos.html": "6126fb0d"
+  },
+  "projeto-um-bilhao.qmd": {
+    "projeto-um-bilhao.html": "ac7706b3"
+  },
+  "projeto-ojs-downloader.qmd": {
+    "projeto-ojs-downloader.html": "cceb2376"
+  },
+  "projeto-wos-downloader.qmd": {
+    "projeto-wos-downloader.html": "d65f9031"
+  },
+  "julia-introducao.qmd": {
+    "julia-introducao.html": "5d0515b1"
+  },
+  "projeto-json-map.qmd": {
+    "projeto-json-map.html": "1b008b94"
+  },
+  "projeto-flexdashboard.qmd": {
+    "projeto-flexdashboard.html": "f7f40888"
+  },
+  "projeto-dicionario-sinonimos.qmd": {
+    "projeto-dicionario-sinonimos.html": "4d7b9b6d"
+  },
+  "projeto-diagrama.qmd": {
+    "projeto-diagrama.html": "976f9494"
+  },
+  "python-introducao.qmd": {
+    "python-introducao.html": "35f18c65"
+  },
+  "python-pandas-numpy.qmd": {
+    "python-pandas-numpy.html": "9046cfee"
+  },
+  "python-networks.qmd": {
+    "python-networks.html": "df9c287a"
+  },
+  "projeto-dea.qmd": {
+    "projeto-dea.html": "006e1db0"
+  },
+  "projeto-tabela-binaria.qmd": {
+    "projeto-tabela-binaria.html": "e559ef9b"
+  },
+  "projeto-res-ping.qmd": {
+    "projeto-res-ping.html": "f209a890"
+  },
+  "projeto-read-ris.qmd": {
+    "projeto-read-ris.html": "6c992b1d"
+  },
+  "projeto-leitura-ris.qmd": {
+    "projeto-leitura-ris.html": "cf53c9b3"
+  }
+}

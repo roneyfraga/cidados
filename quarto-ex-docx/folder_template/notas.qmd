@@ -1,0 +1,49 @@
+---
+title: "Title"
+date: "today"
+date-format: iso 
+author:
+  - name: Roney Fraga Souza
+    affiliations:
+      - name: Universidade Federal de Mato Grosso
+format: 
+  html:
+      toc: true
+      toc-location: right
+      preper-html: true 
+      fig-width: 8 
+      fig-height: 4 
+      code-fold: true
+      theme: solar
+      code-line-numbers: true
+  revealjs: 
+    slide-number: true
+    highlight-style: tango
+    code-line-numbers: true
+    chalkboard: 
+      buttons: true
+    footer: <https://roneyfraga.com>
+  pdf:
+    documentclass: article
+    papersize: a4
+    lof: false
+    lot: false
+    toc: false
+    code-line-numbers: true
+    highlight-style: tango
+    colorlinks: true
+    geometry:
+      - top=30mm
+      - left=20mm
+      - heightrounded
+  docx:
+    number-sections: true
+    highlight-style: tango
+    reference-doc: template-ms-word.docx
+lang: pt
+bibliography: references.bib
+csl: abnt-ipea.csl
+---
+
+
+
