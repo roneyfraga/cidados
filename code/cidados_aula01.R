@@ -150,16 +150,16 @@ mtcars
 # 'save()', 'load()'  e save.image()
 
 # salvar apenas 'x' no arquivo 'x.rda' no diretório rawfiles
-save(mtcars, file = "rawfiles/mtcars.rda")
+save(mtcars, file = "data/mtcars.rda")
 
 # salvando ambos, 'x' e 'y' no arquivo 'xy.rda'
-save(x, y, file = "rawfiles/xy.rda") 
+save(x, y, file = "data/xy.rda") 
 
 # salvar apenas 'x' no arquivo 'x.rds'
-saveRDS(x, 'rawfiles/qualquer_nome.rds')
+saveRDS(x, 'data/qualquer_nome.rds')
 
 # é possível salvar x e y em arquivos '.rds'?
-saveRDS(x, y, 'rawfiles/x.rds')
+saveRDS(x, y, 'data/x.rds')
 
 # listar os objetos que estão no workspace (espaço de trabalho)
 ls()
@@ -182,16 +182,16 @@ y
 rm(x)         
 
 # carregar os objetos 'x' e 'y' salvos em 'ly.rda'
-load("rawfiles/xy.rda")  
+load("data/xy.rda")  
 ls()
 
 # carregar o objeto 'x' no formato '.rds'
-readRDS("rawfiles/qualquer_nome.rds")  
-x <- readRDS("rawfiles/qualquer_nome.rds")  
+readRDS("data/qualquer_nome.rds")  
+x <- readRDS("data/qualquer_nome.rds")  
 ls()
 
 # salvar tudo que esta no workspace
-save.image('rawfiles/Alunos_Mestrado.rda')
+save.image('data/Alunos_Mestrado.rda')
 
 
 
@@ -225,9 +225,9 @@ dir()
 
 getwd()
 
-read.csv(file = '/home/roney/OneDrive/Rworkspace/2020 CiDados Graduacao/rawfiles/mtcars.csv', sep = ';')
+read.csv(file = '/home/roney/OneDrive/Rworkspace/2020 CiDados Graduacao/data/mtcars.csv', sep = ';')
 
-carros <- read.csv(file = '~/OneDrive/Rworkspace/2020 CiDados Mestrado/rawfiles/mtcars.csv', sep = ';')
+carros <- read.csv(file = '~/OneDrive/Rworkspace/2020 CiDados Mestrado/data/mtcars.csv', sep = ';')
 
 ls()
 

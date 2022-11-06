@@ -504,19 +504,19 @@ starwars |>
 #-----------
 # off-topic: import and export 
 
-write.csv(tt, file = 'rawfiles/tt.csv')
-write.csv2(tt, file = 'rawfiles/tt2.csv', row.names = F)
-write.table(tt, file = 'rawfiles/tt3.txt', sep = '|', quote = F, row.names = F)
+write.csv(tt, file = 'data/tt.csv')
+write.csv2(tt, file = 'data/tt2.csv', row.names = F)
+write.table(tt, file = 'data/tt3.txt', sep = '|', quote = F, row.names = F)
 
-rio::export(tt, file = 'rawfiles/tt4.xlsx')
-rio::export(tt, file = 'rawfiles/tt4.dta')
-rio::export(tt, file = 'rawfiles/tt4.csv')
-rio::export(tt, file = 'rawfiles/tt4.txt')
-rio::export(tt, file = 'rawfiles/tt4.txt')
-readr::write_csv(tt, 'rawfiles/tt4.txt')
+rio::export(tt, file = 'data/tt4.xlsx')
+rio::export(tt, file = 'data/tt4.dta')
+rio::export(tt, file = 'data/tt4.csv')
+rio::export(tt, file = 'data/tt4.txt')
+rio::export(tt, file = 'data/tt4.txt')
+readr::write_csv(tt, 'data/tt4.txt')
 
-tt = rio::import('rawfiles/tt4.xlsx')  
-tt <- rio::import('rawfiles/tt4.xlsx')  
+tt = rio::import('data/tt4.xlsx')  
+tt <- rio::import('data/tt4.xlsx')  
 
 rio::import('tt4.xlsx')  |>
     tibble::as_tibble() ->

@@ -287,8 +287,8 @@ ggsave("images/plot.png", width = 5, height = 5)
 summary(p)
 
 # Save a cached copy of it to disk, with saveRDS(). This saves a complete copy of the plot object, so you can easily re-create it with readRDS()
-saveRDS(p, "rawfiles/plot.rds")
-q <- readRDS("rawfiles/plot.rds")
+saveRDS(p, "data/plot.rds")
+q <- readRDS("data/plot.rds")
 
 
 # ------------------------------

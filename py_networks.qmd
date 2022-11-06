@@ -1,8 +1,6 @@
 
 # Networks
 
-`Rworkspace/python`
-
 ## graph_tool
 
 `py-graph_tool.py`
