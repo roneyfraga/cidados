@@ -3,9 +3,8 @@
 
 ## pandas 
 
-`code/py_pandas.py`
 
-```{r file = 'code/py_pandas.py'}
+```{r file = 'code/py-pandas.py', filename = 'code/py-pandas.py'}
 #| eval: false
 #| echo: true
 #| code-fold: true
@@ -13,9 +12,7 @@
 
 ## numpy
 
-`code/py_numpy.py`
-
-```{r file = 'code/py_numpy.py'}
+```{r file = 'code/py-numpy.py', filename = 'code/py-numpy.py'}
 #| eval: false
 #| echo: true
 #| code-fold: true
@@ -23,9 +20,7 @@
 
 ## dfply
 
-`code/py_dfply.py`
-
-```{r file = 'code/py_numpy.py'}
+```{r file = 'code/py-numpy.py', filename = 'code/py-numpy.py'}
 #| eval: false
 #| echo: true
 #| code-fold: true

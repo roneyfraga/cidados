@@ -1,0 +1,55 @@
+
+# Ler arquivo `.ris`
+
+
+```{r}
+#| eval: true
+#| echo: true
+#| code-fold: show
+#| warning: false
+
+library(tidyverse)
+library(readr)
+
+mystring <- read_file("code/getTags-ris/MembrosORIGINAL.ris")
+mylist <- strsplit(mystring, '\n\n')
+mylist2 <- strsplit(mylist[[1]], '\n')
+
+getTags <- function(lista = lista, tag = tag) {
+    tag2 <- paste0('^', tag, ' ')
+    ll <- list()
+    lb <- list()
+    for(i in seq_along(lista)) {
+        ll[[i]] <- grep(tag2, lista[[i]], value = FALSE)
+        if(length(ll[[i]]) > 0){ 
+            lb[[i]] <- lista[[i]][[ll[[i]]]]
+        }else{ 
+            lb[[i]] <- paste0(tag, '  - Campo ausente')
+        }
+    }
+    lb <- unlist(lb)
+    lb2 <- gsub(paste0(tag, '  - '), '', lb)
+    return(lb2)
+}
+
+TY <- getTags(lista = mylist2, tag = 'TY')
+NOME <- getTags(lista = mylist2, tag = 'NOME')
+CITA <- getTags(lista = mylist2, tag = 'CITA')
+BOLS <- getTags(lista = mylist2, tag = 'BOLS')
+ENDE <- getTags(lista = mylist2, tag = 'ENDE')
+ARE1 <- getTags(lista = mylist2, tag = 'ARE1')
+
+a <- data.frame(TY, NOME, CITA, BOLS, ENDE, ARE1)
+
+a |> 
+    rmarkdown::paged_table()
+```
+
+`MembrosORIGINAL.ris`
+
+```{r filename = 'code/getTags-ris/MembrosORIGINAL.ris', file = 'code/getTags-ris/MembrosORIGINAL.ris'}
+#| eval: false
+#| echo: true
+#| code-fold: true
+```
+

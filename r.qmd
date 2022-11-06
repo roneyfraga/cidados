@@ -8,7 +8,7 @@
 - Material avançado de programação em R (@wickham2019advanced, e @gillespie2016)
 
 - Material sobre relatórios (html, pdf, docx e epub) no R (@xie2016bookdown, @xie2017blogdown, e @xie2018rmarkdown)
-  - <https://quarto.org> é a atualiação dos possibilidades anteriores de relatórios.
+  - <https://quarto.org> é a atualização dos possibilidades anteriores de relatórios.
 
 - Material sobre Gráficos (@wickham2016data, @wickham2016r4ds, @chang2018rgraphics)
 

@@ -7,9 +7,8 @@
 - list
 - table, aggregate, reshape, merge
 
-`code/cidados_aula02.R`
 
-```{r file = 'code/cidados_aula02.R'}
+```{r file = 'code/cidados-aula02.R', filename = 'code/cidados-aula02.R'}
 #| eval: false
 #| echo: true
 #| code-fold: show

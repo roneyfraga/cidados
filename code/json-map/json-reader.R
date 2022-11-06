@@ -1,27 +1,14 @@
 
-# json + `purrr::map()`
-
-`Rworkspace/2022-json-map`
-
-```{r filename='json-reader.R'}
-#| eval: false 
-#| echo: true
-#| code-fold: show
-
-# não existe 'rooms' dentro de pcf
-
 library(jsonlite) 
 library(purrr) 
 library(dplyr) 
 library(rio) 
 
-# 13.09
-jsonlite::fromJSON('pcf-form-default-rtdb-export 13.09.json') ->
+jsonlite::fromJSON('exemplo.json') ->
     pcf
 
 #---------------
 # desistentes
-
 lista2dfdesistentes <- function(x) {x |> purrr::pluck('desistentes') |> as.data.frame() |> tibble::as_tibble()}
 
 pcf[['rooms']] |>
@@ -60,7 +47,7 @@ desistentes2 |>
     dplyr::select(- a_deletar) ->
     desistentes_df
 
-rio::export(desistentes_df, 'pcf_desistentes_13_09.xlsx') 
+rio::export(desistentes_df, 'desistentes.xlsx') 
 
 #---------------
 # aderidos
@@ -164,7 +151,7 @@ l <- list(aderidos = aderidos2_df,
           questao56 = aderidos_questao56, 
           questao57 = aderidos_questao57) 
 
-openxlsx::write.xlsx(l, file = "pcf_aderidos_13_09_questoes_separadas.xlsx", asTable = T)
+openxlsx::write.xlsx(l, file = "aderidos.xlsx", asTable = T)
 
 # rio::export(aderidos_df, 'pcf_aderidos_13_09.xlsx') 
 
@@ -218,6 +205,5 @@ naoaderidos2 |>
     dplyr::relocate(situacao, id, sort(var_names)) ->
     naoaderidos_df
 
-rio::export(naoaderidos_df, 'pcf_naoaderidos_13_09.xlsx') 
-```
+rio::export(naoaderidos_df, 'naoaderidos.xlsx') 
 

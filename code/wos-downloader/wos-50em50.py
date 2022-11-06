@@ -1,14 +1,4 @@
 
-# WoS downloader
-
-`Python + Selenium`
-
-
-```{python filename='wos-50em50.py'}
-#| eval: false 
-#| echo: true
-#| code-fold: show
-
 # máximo de páginas 2000 com 50 elementos na página
 
 # query 
@@ -124,6 +114,5 @@ for pagina in paginas:
                     '\n' )
         
 
-```
-
+#___________________________________ 
 

@@ -7,9 +7,8 @@
 - Parte 4: `dplyr` advanced
 - Parte 5: `tidyr` advanced
 
-`code/cidados_aula03.R`
 
-```{r file = 'code/cidados_aula03.R'}
+```{r file = 'code/cidados-aula03.R', filename = 'code/cidados-aula03.R'}
 #| eval: false
 #| echo: true
 #| code-fold: show

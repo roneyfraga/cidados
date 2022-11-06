@@ -1,0 +1,13 @@
+
+# WoS downloader
+
+`Python + Selenium`
+
+
+
+```{r file = 'code/wos-downloader/wos-50em50.py', filename = 'code/wos-downloader/wos-50em50.py'}
+#| eval: false
+#| echo: true
+#| code-fold: show
+```
+

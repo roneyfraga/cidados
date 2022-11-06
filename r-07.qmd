@@ -11,7 +11,7 @@ Baixar os microdados da Pesquisa de Orçamento Familiar (POF) 2017-2018 em: <htt
 
 Ver arquivo oficial do IBGE: `POF_2017_2018/Programas_de_Leitura_20210304/R/Leitura dos Microdados - R.R`
 
-```{r}
+```{r filename = 'importar_pof.R'}
 #| eval: false
 #| echo: true
 

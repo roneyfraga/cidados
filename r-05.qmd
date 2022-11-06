@@ -1,0 +1,14 @@
+
+# Velocidade com `data.table`
+
+- Parte 1: desempenho na importacação e exportação de dados
+- Parte 2: sintax do pacote data.table
+- Parte 3: pacotes dtplyr e tidyfast
+- Parte 4: microdados: bare metal `OR` blazingly fast _way_
+
+```{r file = 'code/cidados-aula05.R', filename = 'code/cidados-aula05.R'}
+#| eval: false
+#| echo: true
+#| code-fold: show
+```
+

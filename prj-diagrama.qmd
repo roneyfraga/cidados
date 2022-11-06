@@ -3,10 +3,12 @@
 
 Diagrama da antiga redes de computadores.
 
-`Rworkspace/DiagrammeR`
-
-```{r filename='rede-computadores.R'}
-#| eval: false 
+```{r}
+#| label: fig-rede
+#| fig-cap: Diagrama da rede antiga de computadores
+#| fig-width: 8
+#| fig-height: 12
+#| eval: true
 #| echo: true
 #| code-fold: show
 
@@ -61,4 +63,3 @@ grViz("
 ")
 ```
 
-![](images/diagrammerR.png)

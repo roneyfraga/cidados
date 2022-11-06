@@ -18,9 +18,8 @@
 
 ## Básico
 
-`code/jl_introducao.jl`
 
-```{r file = 'code/jl_introducao.jl'}
+```{r file = 'code/jl-introducao.jl', filename = 'code/jl-introducao.jl'}
 #| eval: false 
 #| echo: true
 #| code-fold: true
@@ -28,9 +27,7 @@
 
 # Julia a partir do R
 
-`code/jl_JuliaCall.jl`
-
-```{r file = 'code/jl_JuliaCall.jl'}
+```{r file = 'code/jl-JuliaCall.jl', filename = 'code/jl-JuliaCall.jl'}
 #| eval: false 
 #| echo: true
 #| code-fold: true

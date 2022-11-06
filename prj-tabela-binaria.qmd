@@ -3,9 +3,7 @@
 
 - gera tabela binária para `n` dimensões
 
-`Rworkspace/2020_Henrique-Roge`
-
-```{r filename='henrique.R'}
+```{r}
 #| eval: false
 #| echo: true
 #| code-fold: show

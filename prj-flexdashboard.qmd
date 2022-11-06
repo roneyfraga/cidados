@@ -1,0 +1,10 @@
+
+# `flexdashboard`
+
+
+- Resultado
+    - <https://roneyfraga.com/dash/2020-a4f>
+
+- Código
+    - <https://github.com/roneyfraga/2020-a4f>
+

@@ -6,9 +6,7 @@
 - matriz
 - data frame
 
-`code/cidados_aula01.R`
-
-```{r file = 'code/cidados_aula01.R'}
+```{r file = 'code/cidados-aula01.R', filename = 'code/cidados-aula01.R'}
 #| eval: false
 #| echo: true 
 #| cold-fold: show

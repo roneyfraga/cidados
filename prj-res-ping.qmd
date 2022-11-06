@@ -1,0 +1,28 @@
+
+# Ping 
+
+- `ping.R`: arquivo para verificar se o site está no ar.
+
+- `*/1 * * * * Rscript /home/bibr/ping.R`: crontab para executar esse script a cada minuto.
+
+- `analysis.R`: arquivo para ler o csv e fazer um gráfico de quanto tempo o site fica fora do ar a cada dia.
+
+## Ping
+
+```{r file='code/ping/ping.R', filename='code/ping/ping.R'}
+#| eval: false
+#| echo: true
+#| code-fold: show
+```
+
+## Análise
+
+```{r file='code/ping/analysis.R', filename='code/ping/analysis.R'}
+#| eval: false
+#| echo: true
+#| code-fold: show
+```
+
+![](code/ping/pings_res.png)
+
+

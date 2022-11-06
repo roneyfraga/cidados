@@ -1,9 +1,7 @@
 
 # Primeiros passos
 
-`code/py_basic.py`
-
-```{r file = 'code/py_basic.py'}
+```{r file = 'code/py-basic.py', filename = 'code/py-basic.py'}
 #| eval: false
 #| echo: true
 #| code-fold: true

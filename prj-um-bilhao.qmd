@@ -84,9 +84,7 @@ print(toc - tic, 'secs')
 
 ## Python source 
 
-`code/um_bilhao.py`
-
-```{r file = 'code/um_bilhao.py'}
+```{r file = 'code/um-bilhao/um-bilhao.py', filename = 'code/um-bilhao/um-bilhao.py'}
 #| eval: false
 #| echo: true 
 ```
@@ -96,7 +94,7 @@ print(toc - tic, 'secs')
 #| echo: true 
 #| warning: false
 
-reticulate::source_python('code/um_bilhao.py')
+reticulate::source_python('code/um-bilhao/um-bilhao.py')
 
 tictoc::tic()
 sum_until_py(1000000000)
@@ -104,7 +102,6 @@ tictoc::toc()
 ```
 
 > 37.102 sec elapsed
-
 
 ## Julia from JuliaCall 
 
@@ -153,9 +150,7 @@ end
 
 ## Julia source
 
-`code/um_bilhao.jl`
-
-```{r file = 'code/um_bilhao.jl'}
+```{r file = 'code/um-bilhao/um-bilhao.jl', filename = 'code/um-bilhao/um-bilhao.jl'}
 #| eval: false
 #| echo: true
 #| warning: false
@@ -166,7 +161,7 @@ end
 #| echo: true
 #| warning: false
 
-julia_source('code/um_bilhao.jl')
+julia_source('code/um-bilhao/um-bilhao.jl')
 
 tictoc::tic()
 julia_call('sum_until_jl', 1000000000)
@@ -202,9 +197,7 @@ tictoc::toc()
 
 ## C++ via Rcpp source
 
-`code/um_bilhao.cpp`
-
-```{r file = 'code/um_bilhao.cpp'}
+```{r file = 'code/um-bilhao/um-bilhao.cpp', filename = 'code/um-bilhao/um-bilhao.cpp'}
 #| eval: false
 #| echo: true
 #| code-fold: show
@@ -215,7 +208,7 @@ tictoc::toc()
 #| echo: true
 #| code-fold: show
 
-sourceCpp('code/um_bilhao.cpp')
+sourceCpp('code/um-bilhao/um-bilhao.cpp')
 
 tictoc::tic()
 sum_until_v2_cpp(1000000000)

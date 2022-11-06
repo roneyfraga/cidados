@@ -32,23 +32,23 @@ book:
 
     - part: r.qmd 
       chapters:
-        - r_01.qmd
-        - r_02.qmd
-        - r_03.qmd
-        - r_04.qmd
-        - r_05.qmd
-        - r_06.qmd
-        - r_07.qmd
+        - r-01.qmd
+        - r-02.qmd
+        - r-03.qmd
+        - r-04.qmd
+        - r-05.qmd
+        - r-06.qmd
+        - r-07.qmd
 
     - part: julia.qmd
       chapters:
-        - jl_introducao.qmd
+        - jl-introducao.qmd
 
     - part: python.qmd
       chapters:
-        - py_introducao.qmd
-        - py_pandas_numpy.qmd
-        # - py_networks.qmd
+        - py-introducao.qmd
+        - py-pandas-numpy.qmd
+        # - py-networks.qmd
 
     # - part: redes.qmd
         # tidygraph
@@ -64,17 +64,17 @@ book:
 
     - part: projetos.qmd
       chapters:
-        - prj_um_bilhao.qmd
-        - prj_ojs_downloader.qmd
-        - prj_wos_downloader.qmd
-        - prj_json_map.qmd
-        - prj_flexdashboard.qmd
-        - prj_dicionario_sinonimos.qmd
-        - prj_tabela_binaria.qmd
-        - prj_res_ping.qmd
-        - prj_leitura_ris.qmd
-        - prj_diagrama.qmd
-        - prj_dea.qmd
+        - prj-um-bilhao.qmd
+        - prj-ojs-downloader.qmd
+        - prj-wos-downloader.qmd
+        # - prj-json-map.qmd
+        - prj-flexdashboard.qmd
+        - prj-dicionario-sinonimos.qmd
+        - prj-tabela-binaria.qmd
+        - prj-res-ping.qmd
+        - prj-leitura-ris.qmd
+        - prj-diagrama.qmd
+        - prj-dea.qmd
 
     - references.qmd
 

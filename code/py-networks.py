@@ -1,15 +1,3 @@
-
-# Networks
-
-## graph_tool
-
-`py-graph_tool.py`
-
-```{python}
-#| eval: false
-#| echo: true
-#| code-fold: true
-
 # ------------------------------
 # Creating and manipulating graphs
 
@@ -233,6 +221,4 @@ a = np.array([1,0,0,1])
 b = np.array([1,1,0,0])
 
 vector_difference(a,b)
-```
-
 
