@@ -71,6 +71,7 @@ book:
         - prj-flexdashboard.qmd
         - prj-ojs-downloader.qmd
         - prj-wos-downloader.qmd
+        - prj-caged-download.qmd
         - prj-res-ping.qmd
         - prj-dicionario-sinonimos.qmd
         - prj-tabela-binaria.qmd

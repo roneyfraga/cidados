@@ -1,0 +1,14 @@
+
+# Raspagem CAGED
+
+- Com os dados da CAGED:
+    - Baixar , Extrair, e Empilhar.
+
+Código em parceria com Willian Dambros.
+
+```{r file = 'code/caged/caged-download.R', filename = 'code/caged/caged-download.R'}
+#| eval: false
+#| echo: true
+#| code-fold: show
+```
+
