@@ -8,7 +8,9 @@ Alguns experimentos com [`Julia`](julia.qmd) e [`Python`](python.qmd).
 Alguns pequenos [`Projetos`](projetos.qmd), feitos principalmente em R. 
 
 - TODO
-    - adicionar pastas de projetos em `code/nome-do-projeto` com arquivos suplementares para cada projeto 
+    - Parte: excel
     - Parte: redes
+        - conceito, métricas, tidygraph, ggraph, bipartite, modularidade, comunidades
     - Parte: análise de texto
+        - regex, part to speech, tidytext, NLP, STM
 

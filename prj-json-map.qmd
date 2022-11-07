@@ -1,9 +1,0 @@
-
-# json + `purrr::map()`
-
-```{r file = 'code/json-map/json-reader.R', filename = 'code/json-map/json-reader.R'}
-#| eval: false 
-#| echo: true
-#| code-fold: show
-```
-

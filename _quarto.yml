@@ -70,7 +70,6 @@ book:
         - prj-um-bilhao.qmd
         - prj-ojs-downloader.qmd
         - prj-wos-downloader.qmd
-        # - prj-json-map.qmd
         - prj-flexdashboard.qmd
         - prj-dicionario-sinonimos.qmd
         - prj-tabela-binaria.qmd
