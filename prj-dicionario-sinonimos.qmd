@@ -1,5 +1,5 @@
 
-# Dicionário de sinônimos
+# `Rscript` dicionário de sinônimos
 
 ```{r filename='dicsyn.R'}
 #| eval: false

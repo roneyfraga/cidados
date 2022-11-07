@@ -1,5 +1,5 @@
 
-# Ping 
+# Ping website 
 
 - `ping.R`: arquivo para verificar se o site está no ar.
 

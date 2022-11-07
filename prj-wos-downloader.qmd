@@ -1,8 +1,7 @@
 
-# WoS downloader
+# Raspagem WoS
 
 `Python + Selenium`
-
 
 
 ```{r file = 'code/wos-downloader/wos-50em50.py', filename = 'code/wos-downloader/wos-50em50.py'}

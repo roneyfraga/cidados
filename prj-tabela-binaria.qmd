@@ -1,5 +1,5 @@
 
-# Tabela binária
+# Tabela binária com combinações
 
 - gera tabela binária para `n` dimensões
 
