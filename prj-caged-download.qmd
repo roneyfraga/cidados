@@ -1,12 +1,15 @@
 
 # Raspagem CAGED
 
+Função para baixar os dados da CAGED <ftp://ftp.mtps.gov.br/pdet/microdados/NOVO%20CAGED/>
+
 - Com os dados da CAGED:
     - Baixar , Extrair, e Empilhar.
+    - inserir competência, ano, mes, e diretório de download
 
 Código em parceria com Willian Dambros.
 
-```{r file = 'code/caged/caged-download.R', filename = 'code/caged/caged-download.R'}
+```{r file = 'code/caged/caged-download2.R', filename = 'code/caged/caged-download2.R'}
 #| eval: false
 #| echo: true
 #| code-fold: show

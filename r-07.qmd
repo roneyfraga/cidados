@@ -15,12 +15,15 @@ Ver arquivo oficial do IBGE: `POF_2017_2018/Programas_de_Leitura_20210304/R/Leit
 #| eval: false
 #| echo: true
 
+options(scipen = 999)
+
 library(tidyverse) 
 library(dtplyr) 
 library(data.table) 
+library(rio)
 
 local_codigo <- getwd()
-local_dados <- '/mnt/raid0/Pesquisa/POF_2017_2018/Dados_20210304' 
+local_dados <- '/mnt/raid0/Pesquisa/Microdados/POF_2017_2018/Dados_20210304' 
 
 setwd(local_dados)
 # setwd(local_codigo)
@@ -231,75 +234,120 @@ Na POF ver Cadastro de Produtos em `POF_2017_2018/Documentacao_20210423/Cadastro
 
 : Dispêndio com bens e serviços culturais  {#tbl-quadro-bens-culturais}
 
+Considerar:
+* v9001 = código do tipo de despesa/aquisição 
+* v9002 = forma da aquisição
+* v8000 = valor em reais
 
 ```{r}
 #| eval: false 
 #| echo: true
+
+rio::import('morador.csv') |>
+    tibble::as_tibble() ->
+    morador
+
+rio::import('despesa_individual.csv') |>
+    tibble::as_tibble() ->
+    despesa_individual
+
+rio::import('despesa_coletiva.csv') |>
+    tibble::as_tibble() ->
+    despesa_coletiva
+
+rio::import('aluguel_estimado.csv') |>
+    tibble::as_tibble() -> 
+    aluguel_estimado
+
+rio::import('rendimento_trabalho.csv') |>
+    tibble::as_tibble() -> 
+    rendimento_trabalho
 
 bens_culturais <- c('4906201', '2701801', '1800801', '1800802', '1800803', '1800804', 
                     '1800805', '1800901', '1800902', '3201701', '3201801', '2803101', 
                     '2803201', '2803301', '2803401', '2803501', '2803601', '2803801', 
                     '4102001', '4102101', '4104401', '4104501', '4106501', '2800501')
 
-names(despesa_individual)
-
-vari <- c('uf', 'estrato_pof', 'tipo_situacao_reg', 'cod_upa', 'num_dom', 'num_uc', 
+vari <- c('uf', 'estrato_pof',  'cod_upa', 'tipo_situacao_reg', 'cod_upa', 'num_dom', 'num_uc', 
           'v9001', 'v8000')
 
-despesa_individual_cultura <- despesa_individual[despesa_individual$v9001 %in% bens_culturais, vari]
+despesa_individual |>
+    dplyr::select(vari) |> 
+    dplyr::filter(v9001 %in% bens_culturais) ->
+    di_cultura
 
-despesa_coletiva_cultura <- despesa_coletiva[despesa_coletiva$v9001 %in% bens_culturais, vari]
+di_cultura |> 
+    dplyr::filter(!(v8000 >= 9999999.99)) |>
+    dplyr::group_by(cod_upa, num_dom, num_uc) |> 
+    dplyr::summarise(gasto_cultura = sum(v8000))  |> 
+    dplyr::arrange(desc(gasto_cultura))
 
-despesa_cultura <- rbind(despesa_coletiva_cultura, despesa_individual_cultura)
+
+di_cultura |> 
+    dplyr::filter(!(v8000 >= 9999999.99)) |>
+    dplyr::group_by(v9001) |> 
+    dplyr::summarise(gasto_cultura = sum(v8000))  |> 
+    dplyr::arrange(desc(gasto_cultura))
+despesa_coletiva |>
+    dplyr::select(vari) |> 
+    dplyr::filter(v9001 %in% bens_culturais) ->
+    dc_cultura
+
+despesa_cultura <- rbind(dc_cultura, di_cultura)
+
+despesa_cultura |> 
+    dplyr::count(v8000, sort = T) |>
+    print(n = Inf)
 
 # deletar linhas com valores ignorados, ver dicionário
-despesa_cultura <- despesa_cultura[ despesa_cultura$v8000 != 9999999.99, ]
+despesa_cultura |>
+    dplyr::filter(!(v8000 >= 9999999.99)) ->
+    despesa_cultura
 
 # agregar o total gasto com cultura para cada domicílio
-consumo_cultura_ag <- aggregate(despesa_cultura$v8000, list(cod_upa = despesa_cultura$cod_upa, 
-                                                            num_dom = despesa_cultura$num_dom, 
-                                                            num_uc = despesa_cultura$num_uc),
-                                sum, na.rm = TRUE) 
-
-consumo_cultura_ag$consumo_cultura <- consumo_cultura_ag$x
-consumo_cultura_ag$x <- NULL
+despesa_cultura |>
+    dplyr::group_by(cod_upa, num_dom, num_uc) |>
+    dplyr::summarise(consumo_cultura_ag = sum()) ->
+    consumo_cultura_ag
 
 # renda total do domicílio
-trabalho[ 1:20, c('cod_upa','num_dom','num_uc','cod_informante','renda_total')]
+despesa_cultura
 
-trabalho_domicilio <- trabalho[ trabalho$cod_informante==1, c('cod_upa','num_dom','num_uc','renda_total')]
+trabalho[1:20, c('cod_upa', 'num_dom', 'num_uc', 'cod_informante', 'renda_total')]
 
-cultura <- merge(consumo_cultura_ag, trabalho_domicilio, all.x=TRUE, all.y=FALSE)
+trabalho_domicilio <- trabalho[trabalho$cod_informante == 1, c('cod_upa', 'num_dom', 'num_uc', 'renda_total')]
+
+cultura <- merge(consumo_cultura_ag, trabalho_domicilio, all.x = TRUE, all.y = FALSE)
 
 cultura$prop_cultura <- cultura$consumo_cultura / cultura$renda_total
 
-cultura <- cultura[ !is.na(cultura$renda_total), ]
+cultura <- cultura[!is.na(cultura$renda_total), ]
 
-cultura2 <- merge(domicilio,cultura, all.x=TRUE, all.y=FALSE)
+cultura2 <- merge(domicilio,cultura, all.x = TRUE, all.y = FALSE)
 
-table(is.na(cultura2$consumo_cultura), useNA='ifany')
+table(is.na(cultura2$consumo_cultura), useNA = 'ifany')
 
 cultura2$consumiu_cultura <- ifelse(is.na(cultura2$consumo_cultura), 'Nao Consumiu', 'Sim Consumiu')
 
 table(cultura2$consumiu_cultura)
 
 cultura2$tipo_situacao_reg <- factor(cultura2$tipo_situacao_reg, 
-                                     levels=c(1,2), 
-                                     labels=c('Urbano','Rural'))
+                                     levels = c(1, 2), 
+                                     labels = c('Urbano', 'Rural'))
 table(cultura2$tipo_situacao_reg)
 
 # porporção dos domicílios Rural ou Urbano que tiveram 
-table(cultura2$tipo_situacao_reg, cultura2$consumiu_cultura, useNA='ifany')
-addmargins(table(cultura2$tipo_situacao_reg, cultura2$consumiu_cultura, useNA='ifany'))
-prop.table(table(cultura2$tipo_situacao_reg, cultura2$consumiu_cultura, useNA='ifany'))
-addmargins(prop.table(table(cultura2$tipo_situacao_reg, cultura2$consumiu_cultura, useNA='ifany')))
+table(cultura2$tipo_situacao_reg, cultura2$consumiu_cultura, useNA = 'ifany')
+addmargins(table(cultura2$tipo_situacao_reg, cultura2$consumiu_cultura, useNA = 'ifany'))
+prop.table(table(cultura2$tipo_situacao_reg, cultura2$consumiu_cultura, useNA = 'ifany'))
+addmargins(prop.table(table(cultura2$tipo_situacao_reg, cultura2$consumiu_cultura, useNA = 'ifany')))
 
 # ----------
 # região metropolitana
 
-capital <- c(1101,1102,1201,1301:1306,1401,1402,1501:1503,1601,1602,1701,2101:2103,2201:2203,2301:2306,2401,2402, 2501:2503,2601:2603,2701:2703,2801,2802,2901:2906,3101:3106,3201,3202,3301:3309,3501:3509,4101:4105,4201,4202,4301:4306,5001:5003,5101,5102,5201:5203,5301:5306)
+capital <- c(1101, 1102, 1201, 1301:1306, 1401, 1402, 1501:1503, 1601, 1602, 1701, 2101:2103, 2201:2203, 2301:2306, 2401, 2402,  2501:2503, 2601:2603, 2701:2703, 2801, 2802, 2901:2906, 3101:3106, 3201, 3202, 3301:3309, 3501:3509, 4101:4105, 4201, 4202, 4301:4306, 5001:5003, 5101, 5102, 5201:5203, 5301:5306)
 
-regmtr <- c(1307,1504,1505,1603,2104,2307:2309,2403,2504,2505,2604:2606,2704,2803,2907:2909,3107:3109,3203:3205,3310:3318,3510:3515,4106:4108,4203,4204,4307:4309,5103,5204:5206,5301:5306)
+regmtr <- c(1307, 1504, 1505, 1603, 2104, 2307:2309, 2403, 2504, 2505, 2604:2606, 2704, 2803, 2907:2909, 3107:3109, 3203:3205, 3310:3318, 3510:3515, 4106:4108, 4203, 4204, 4307:4309, 5103, 5204:5206, 5301:5306)
 
 cultura2$regmtr <- ifelse(cultura2$estrato_pof %in% c(regmtr, capital), 'Reg Metropolitana', 'Nao RegMtr')
 
