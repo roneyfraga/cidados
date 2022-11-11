@@ -76,6 +76,7 @@ book:
         - prj-dicionario-sinonimos.qmd
         - prj-tabela-binaria.qmd
         - prj-leitura-ris.qmd
+        - prj-write-ris-lattes.qmd
         - prj-diagrama.qmd
         - prj-dea.qmd
 
