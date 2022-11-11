@@ -1,0 +1,17 @@
+
+# Escrever `.ris` Lattes
+
+Função para transformar dados de publicações acadêmicas obtidos no Lattes, via pacote [getLattes](https://roneyfraga.com/getLattes) em referências de formato `.ris`.
+
+```{r file = 'code/write-ris-lattes/utils.R', filename = 'code/write-ris-lattes/utils.R'}
+#| eval: false
+#| echo: true
+#| code-fold: show
+```
+
+```{r file = 'code/write-ris-lattes/write-ris-from-Lattes.R', filename = 'code/write-ris-lattes/write-ris-from-Lattes.R'}
+#| eval: false
+#| echo: true
+#| code-fold: show
+```
+
