@@ -1,22 +1,37 @@
 
-source('utils.R')
+# carregar função writeRisLattes()
+source('utils.R') 
 
-# importar dados obtidos pelo pacote getLattes
 artigos <- readRDS('artigos.rds') 
 
-# nomes
-names(artigos)
-
-# linhas e colunas
-dim(artigos)
-
-# primeiras linhas
-head(artigos)
-
 # com nome nomes de citação, ex: BUAINAIN, Antonio Marcio
-writeRisLattes(artigos, filename = 'papers_nome_citacao.ris', citationName = T)
+writeRisLattes(artigos, 
+               filename = 'artigos_nome_citacao.ris', 
+               citationName = T,
+               append = F,
+               tableLattes = 'ArtigosPublicados')
 
 # com nome completo do autor, ex: Antonio Marcio Buainain
-writeRisLattes(artigos, filename = 'papers_nome_completo.ris', append = F, citationName = F)
+writeRisLattes(artigos, 
+               filename = 'artigos_nome_citacao.ris', 
+               citationName = T, 
+               append = F,
+               tableLattes = 'ArtigosPublicados')
+
+livros <- readRDS('livros.rds') 
+
+writeRisLattes(livros, 
+               filename = 'livros.ris', 
+               append = F, 
+               citationName = T, 
+               tableLattes = 'Livros')
+
+capitulos_livros <- readRDS('capitulos_livros.rds') 
+
+writeRisLattes(capitulos_livros, 
+               filename = 'capitulos_livros.ris', 
+               append = T,
+               citationName = F, 
+               tableLattes = 'CapitulosLivros')
 
 
