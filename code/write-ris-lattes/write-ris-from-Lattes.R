@@ -13,8 +13,8 @@ writeRisLattes(artigos,
 
 # com nome completo do autor, ex: Antonio Marcio Buainain
 writeRisLattes(artigos, 
-               filename = 'artigos_nome_citacao.ris', 
-               citationName = T, 
+               filename = 'artigos_nome_completo.ris', 
+               citationName = F, 
                append = F,
                tableLattes = 'ArtigosPublicados')
 
