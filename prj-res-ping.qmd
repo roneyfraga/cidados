@@ -5,6 +5,8 @@
 
 - `*/1 * * * * Rscript /home/bibr/ping.R`: crontab para executar esse script a cada minuto.
 
+- para executar cron dentro do R utilizar o pacote `cronR` <https://github.com/bnosac/cronR>.
+
 - `analysis.R`: arquivo para ler o csv e fazer um gráfico de quanto tempo o site fica fora do ar a cada dia.
 
 ## Ping

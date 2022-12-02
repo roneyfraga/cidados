@@ -1,0 +1,7 @@
+
+# Read Lattes XML
+
+```{r file = 'code/read-lattes-xml/script.R', filename = 'code/read-lattes-xml/script.R'}
+#| eval: false
+#| echo: true 
+```

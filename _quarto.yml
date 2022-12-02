@@ -79,6 +79,7 @@ book:
         - prj-write-ris-lattes.qmd
         - prj-diagrama.qmd
         - prj-dea.qmd
+        - prj-lattes.qmd
 
     - references.qmd
 
